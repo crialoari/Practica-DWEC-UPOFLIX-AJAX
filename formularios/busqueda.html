@@ -1,0 +1,40 @@
+<div class="col-4 m-auto">
+    <h4 class="text-warning">
+        Búsqueda avanzada
+    </h4>
+    <form id="frmABuscador">
+            <div id="capaCriterios">
+                <div class="form-group">
+                    <label>
+                        Género:
+                    </label>
+                    <select class="custom-select custom-select-sm" name="selectGenero">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Posterior a:
+                    </label>
+                    <input class="form-control form-control-sm" id="busqfechaInicio" name="busqfechaInicio" type="text">
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Anterior a:
+                    </label>
+                    <input class="form-control form-control-sm" id="busqfechaFin" name="busqfechaFin" type="text">
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label for="txtPuntuacionMinima">
+                        Puntuación mínima (1-5):
+                    </label>
+                    <input class="col-1 form-control form-control-sm" id="txtPuntuacionMinima" maxlength="1" name="txtPuntuacionMinima" type="text">
+                    </input>
+                </div>
+            
+                <input class="btn btn-warning mb-4" type="button" value="Buscar"></input>
+            </div>
+    </form>
+</div>
+<div class="col-8 m-auto" id="capaResultado"></div>

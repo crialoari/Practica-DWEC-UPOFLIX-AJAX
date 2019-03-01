@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Upoflix>
+    <usuarios>
+        <usuario>
+            <user>carlos</user>
+            <nombre>Carlos</nombre>
+            <apellido>Rodríguez</apellido>
+            <email>carlos@gmail.com</email>
+            <contraseña>C4rl0s</contraseña>
+            <fechaRegistro>""</fechaRegistro>
+            <rol>user</rol>
+        </usuario>
+        <usuario>
+            <user>aledaw</user>
+            <nombre>Alejandro</nombre>
+            <apellido>Bocanegra</apellido>
+            <email>alebjdaw@gmail.com</email>
+            <contraseña>Al3jandr0</contraseña>
+            <fechaRegistro>""</fechaRegistro>
+            <rol>admin</rol>
+        </usuario>
+        <usuario>
+            <user>crisdaw</user>
+            <nombre>Cristina</nombre>
+            <apellido>Alonso</apellido>
+            <email>crisaloari@gmail.com</email>
+            <contraseña>cr1St1na</contraseña>
+            <fechaRegistro>""</fechaRegistro>
+            <rol>admin</rol>
+        </usuario>
+    </usuarios>
+    <series>
+        <serie>
+            <titulo>Friends</titulo>
+            <genero>Comedia</genero>
+            <resumen>Las aventuras de seis jóvenes neoyorquinos unidos por una divertida amistad. Entre el amor, el trabajo y la familia, comparten sus alegrías y preocupaciones en el Central Perk, su café favorito.</resumen>
+            <urlImagen>https://cdn-static.sidereel.com/tv_shows/36089/giant_2x/Friends-ShowcardVertical1.jpg</urlImagen>
+            <fechaInicio>09/22/1994</fechaInicio>
+            <fechaFin>06/05/2004</fechaFin>
+        </serie>
+    </series>
+    <peliculas>
+        <pelicula>
+            <titulo>En busca del arca perdida</titulo>
+            <genero>Aventuras</genero>
+            <resumen>El arqueólogo, Indiana Jones, compite contra los nazis en la búsqueda de una famosa reliquia religiosa.</resumen>
+            <urlImagen>https://www.ecartelera.com/carteles/2100/2198/001_p.jpg</urlImagen>
+            <añoEstreno>1981</añoEstreno>
+            <duracion>115</duracion>
+        </pelicula>
+        <pelicula>
+            <titulo>Indiana Jones y el templo maldito</titulo>
+            <genero>Aventuras</genero>
+            <resumen>Indiana busca piedras sagradas en una secta de la India.</resumen>
+            <urlImagen>https://www.ecartelera.com/carteles/2100/2196/001_p.jpg</urlImagen>
+            <añoEstreno>1984</añoEstreno>
+            <duracion>118</duracion>
+        </pelicula>
+        <pelicula>
+            <titulo>Indiana Jones y la última cruzada</titulo>
+            <genero>Aventuras</genero>
+            <resumen>El arqueólogo trotamundos va a Europa ocupada por nazis en busca de su padre que desapareció buscando el Cáliz Sagrado.</resumen>
+            <urlImagen></urlImagen>
+            <añoEstreno>1989</añoEstreno>
+            <duracion>127</duracion>
+        </pelicula>
+        <pelicula>
+            <titulo>Pulp Fiction</titulo>
+            <genero>Drama</genero>
+            <resumen>La vida de un boxeador, dos sicarios, la esposa de un gánster y dos bandidos se entrelaza en una historia de violencia y redención.</resumen>
+            <urlImagen>https://images-na.ssl-images-amazon.com/images/I/51Dss2AhO-L._SY445_.jpg</urlImagen>
+            <añoEstreno>1994</añoEstreno>
+            <duracion>154</duracion>
+        </pelicula>
+    </peliculas>
+    <personas>
+        <persona>
+            <nombre>Steven</nombre>
+            <apellido>Spielberg</apellido>
+        </persona>
+        <persona>
+            <nombre>Harrison</nombre>
+            <apellido>Ford</apellido>
+        </persona>
+        <persona>
+            <nombre>Sean</nombre>
+            <apellido>Connery</apellido>
+        </persona>
+        <persona>
+            <nombre>Jennifer</nombre>
+            <apellido>Aniston</apellido>
+        </persona>
+        <persona>
+            <nombre>Courteney</nombre>
+            <apellido>Cox</apellido>
+        </persona>
+        <persona>
+            <nombre>Lisa</nombre>
+            <apellido>Kudrow</apellido>
+        </persona>
+        <persona>
+            <nombre>Matthew</nombre>
+            <apellido>Perry</apellido>
+        </persona>
+        <persona>
+            <nombre>Quentin</nombre>
+            <apellido>Tarantino</apellido>
+        </persona>
+    </personas>
+    <temporadas>
+        <temporada>
+            <tituloSerie>Friends</tituloSerie>
+            <numTemporada>1</numTemporada>
+            <resumen>En la primera temporada se presentan los seis personajes principales: Chandler, Phoebe, Mónica, Joey, Ross y Rachel.</resumen>
+        </temporada>
+    </temporadas>
+    <capitulos>
+        <capitulo>
+            <tituloSerie>Friends</tituloSerie>
+            <numTemporada>1</numTemporada>
+            <numCapitulo>1</numCapitulo>
+            <resumen>Piloto: En el que Mónica tiene una nueva compañera.</resumen>
+        </capitulo>
+    </capitulos>
+</Upoflix>

@@ -1,0 +1,30 @@
+  .rating-stars span{
+    background-image: url(images/star_empty.png);
+    width: 20px;
+    height: 20px;
+    z-index: 10;
+    float: left;
+  }
+
+  .rating-stars{
+    width: 100px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .cover{
+    background-image: url(images/star_full.png);
+    background-repeat: repeat-x;
+    width: 0;
+    height: 20px;
+  }
+  
+  span.star-1:hover ~ .cover{width: 20px;}
+
+  span.star-2:hover ~ .cover{width: 40px;}
+
+  span.star-3:hover ~ .cover{width: 60px;}
+
+  span.star-4:hover ~ .cover{width: 80px;}
+
+  span.star-5:hover ~ .cover{width: 100px;}

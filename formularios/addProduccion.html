@@ -1,0 +1,84 @@
+<div class="col-10 col-md-6 m-auto">
+    <form id="frmAddProduccion">
+        <h3 class="text-warning">
+            Añadir Producción
+        </h3>
+            <div id="datosComunes">
+                <h5>
+                    Datos de la producción
+                </h5>
+                <div class="form-group">
+                    <label for="txtAddTitulo">
+                        Cartel:
+                        <small>
+                            (url)
+                        </small>
+                    </label>
+                    <input class="form-control form-control-sm" id="txtAddCartel" name="txtAddCartel" type="text">
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label for="txtAddTitulo">
+                        Título:
+                    </label>
+                    <input class="form-control form-control-sm" id="txtAddTitulo" maxlength="50" name="txtAddTitulo" type="text">
+                    </input>
+                </div>
+                <div class="form-group" id="genero">
+                    <label for="selectGenero">
+                        Género:
+                    </label>
+                    <select class="custom-select custom-select-sm" name="selectGenero">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Resumen:
+                    </label>
+                    <textarea class="form-control" id="txtAddResumen" maxlength="220" name="txtAddResumen" rows="3"></textarea>
+                </div>
+                    <div class="form-group row">
+                        <label class="col col-form-label col-form-label-sm">
+                            Fecha estreno:
+                        </label>
+                        <div class="col">
+                            <input class="form-control form-control-sm" id="txtAddAnio" name="txtAddAnio" type="text">
+                            </input>
+                        </div>
+                        <label class="col col-form-label col-form-label-sm">
+                            Duración (min):
+                        </label>
+                        <div class="col">
+                            <input class="form-control form-control-sm" id="txtAddDuracion" maxlength="3" name="txtAddDuracion" type="text">
+                            </input>
+                        </div>
+                    </div>
+
+                <div id="capaActores">
+                    <h5>
+                        Actores
+                    </h5>
+                    <div class="form-group">
+                        <input class="btn btn-outline-warning btn-sm" name="btnActorExistente" type="button" value="Existente"></input>
+                            <input class="btn btn-outline-warning btn-sm" name="btnActorNuevo" type="button" value="Nuevo"></input>
+                    </div>
+                    <!--aqui capa añadir actores-->
+                </div>
+                <div id="capaDirectores">
+                    <h5>
+                        Directores
+                    </h5>
+                    <div class="form-group">
+                        <input class="btn btn-outline-warning btn-sm" name="btnDirectorExistente" type="button" value="Existente"></input>
+                            <input class="btn btn-outline-warning btn-sm" name="btnDirectorNuevo" type="button" value="Nuevo"></input>
+                    </div>
+                    <!--aqui capa añadir directores-->
+                </div>
+            </div>
+ 
+                <input class="btn btn-success" name="btnAñadir" type="button" value="Añadir">
+                </input>
+            </hr>
+        </hr>
+    </form>
+</div>
