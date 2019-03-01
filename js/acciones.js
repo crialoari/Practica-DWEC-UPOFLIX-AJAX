@@ -105,6 +105,7 @@ function cargarEditarElenco(){
         method: "GET",
         success: procesarEditarPersonas
     });
+
 }
 
 //necesarias para varios archivos
@@ -127,4 +128,25 @@ function instanciarXHR() {
         xhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
     return xhttp;
+}
+
+function validarAñadirPersona(oFormulario){
+    oFormulario.txtNombre.classList.remove("bg-warning");
+    oFormulario.txtApellido.classList.remove("bg-warning");
+    var sNombre=oFormulario.txtNombre.value.trim();
+    var sApellido=oFormulario.txtApellido.value.trim();
+    var bValido=true;
+    if(sNombre==""){
+        bValido=false;
+        oFormulario.txtNombre.classList.add("bg-warning");
+        oFormulario.txtNombre.focus();
+    }
+    if(sApellido==""){
+        oFormulario.txtApellido.classList.add("bg-warning");
+        if(bValido){
+            bValido=false;
+            oFormulario.txtApellido.focus();
+        }
+    }
+    return bValido;
 }

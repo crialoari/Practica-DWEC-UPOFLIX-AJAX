@@ -1,5 +1,5 @@
 function procesarEditarPersonas(oDatos){
-	//crea formularios para cada persona 
+		//crea formularios para cada persona 
 	var oColumnaDatos=document.createElement("div");
 	oColumnaDatos.classList.add("col-8");
     oColumnaDatos.classList.add("m-auto");
@@ -115,7 +115,7 @@ function procesarEditarPersonas(oDatos){
 	oBoton.addEventListener("click", añadirFormularioAltaPersona);
 	oCapaAltaPersona.appendChild(oBoton);
 	oColumnaDatos.appendChild(oCapaAltaPersona);
-    oCapaContenido.appendChild(oColumnaDatos);
+	oCapaContenido.appendChild(oColumnaDatos);
 }
 
 function eliminarPersona(oEvento){
@@ -135,14 +135,13 @@ function respuestaEliminarPersona(){
 	if (oAjax.readyState == 4 && oAjax.status == 200) {
 		//console.log(oAjax.responseText);
 		var oRespuesta = JSON.parse(oAjax.responseText);
-    	if (oRespuesta.error == 0) {
-        cargarEditarElenco();
-		}
+    	if (oRespuesta.error == 0)
+        	cargarEditarElenco();
 	    alert(oRespuesta.mensaje);
     }
 }
 
-function editarPersona(){
+function editarPersona(oEvento){
 	var oE = oEvento || window.event;
 	oE.target.classList.toggle("disabled");
 	oE.target.classList.remove("btn-dark");
@@ -150,15 +149,15 @@ function editarPersona(){
 	oE.target.nextSibling.classList.toggle("d-none");
 	oE.target.nextSibling.nextSibling.classList.toggle("d-none");
     var oFormularioPadre=oE.target.parentElement.parentElement;
-    var oInputs=oFormularioPadre.querySelectorAll("input[type=text");
+    var oInputs=oFormularioPadre.querySelectorAll("input[type=text]");
     for(var i=0; i<oInputs.length;i++){
         oInputs[i].readOnly=false;
     }
 	oE.target.removeEventListener("click", editarPersona);
 }
 
-function aceptarEditarPersona(){
-var oE = oEvento || window.event;
+function aceptarEditarPersona(oEvento){
+	var oE = oEvento || window.event;
 	var oFormularioPadre=oE.target.parentElement.parentElement;
 	oFormularioPadre.txtNombre.classList.remove("bg-warning");
 	oFormularioPadre.txtApellido.classList.remove("bg-warning");
@@ -170,6 +169,7 @@ var oE = oEvento || window.event;
 		oFormularioPadre.txtNombre.classList.add("bg-warning");
 		oFormularioPadre.txtNombre.focus();
 	}
+
 	if(sNuevoApellido==""){
 		oFormularioPadre.txtApellido.classList.add("bg-warning");
 		if(bValido){
@@ -181,18 +181,19 @@ var oE = oEvento || window.event;
 	if(!bValido){
 		alert("Por favor rellena todos los campos");	
 	}else{
-		var sNombre=oFormularioPadre.dataset.nombre.replace(/-/g, " ");
-		var sApellido=oFormularioPadre.dataset.apellido.replace(/-/g, " ");
-		
-		var oPersona=oUpoflix.buscarPersona(sNombre,sApellido);
-		if(oPersona==null){
-			alert("Error, pruebe de nuevo");
-		}else{
-			if(oUpoflix.modificarPersona(oPersona,sNuevoNombre,sNuevoApellido))
-			alert("Datos actualizados");
-			mostrarEditarElenco();
-		}
+		var sParametros = "id=" + oFormularioPadre.dataset.persona;
+		sParametros += "&nuevoNombre=" + sNuevoNombre;
+		sParametros += "&nuevoApellidos=" + sNuevoApellido;
+		sParametros = encodeURI(sParametros);
+
+		$.post("./php/editPersona.php", sParametros, respuestaEditarPersona, 'json');
 	}
+}
+
+function respuestaEditarPersona(oDatos, sStatus, oXHR) {
+    if (oDatos.error == 0)
+       	cargarEditarElenco();
+	alert(oDatos.mensaje);
 }
 
 function añadirFormularioAltaPersona(){
@@ -253,15 +254,37 @@ function añadirPersonaDesdeElenco(oEvento){
 	if(validarAñadirPersona(oFormularioPadre)){
 		var sNombre=oFormularioPadre.txtNombre.value.trim();
 		var sApellido=oFormularioPadre.txtApellido.value.trim();
-		var oPersona=new Persona(sNombre,sApellido);
-		if(oUpoflix.altaPersona(oPersona)){
-			alert("Persona añadida.");
-			mostrarEditarElenco();
-		}else{
-			alert("Ya existía esa persona.");
-		}
-		
+		var sParametros = "nombre=" + sNombre;
+		sParametros += "&apellidos=" + sApellido;
+		sParametros = encodeURI(sParametros);
+		$.ajax({
+	        url: "./php/validacionPersona.php",
+	        type: "GET",
+	        async: false,
+	        data: sParametros,
+	        dataType: "text",
+	        success: procesoRespuestaValidarPersona
+	    });
+
+	    if(!PersonaExiste)
+		$.post("./php/addPersona.php", sParametros, respuestañadirPersona, 'json');
+
 	}else{
 		alert("Debe rellenar todos los campos.");
 	}
+}
+
+function procesoRespuestaValidarPersona(sRespuesta) {
+    if (sRespuesta == "EXISTE") {
+        PersonaExiste = true;
+    } else {
+        PersonaExiste = false;
+    }
+
+}
+
+function respuestañadirPersona(oDatos, sStatus, oXHR) {
+    if (oDatos.error == 0)
+       	cargarEditarElenco();
+	alert(oDatos.mensaje);
 }
