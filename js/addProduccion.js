@@ -1,10 +1,11 @@
 rellenarDesplegableGeneroA();
-document.querySelector("#capaAddProduccion input[name=btnAñadir]").addEventListener("click",añadirProduccion);
+rellenarDesplegablePersonas();
+document.querySelector("#capaAddProduccion input[name=btnAñadir]").addEventListener("click",procesoAñadirProduccion);
 document.querySelector("input[name=btnActorNuevo]").addEventListener("click",añadirPersonaNuevaActor);
 document.querySelector("input[name=btnActorExistente]").addEventListener("click",añadirPersonaExistenteActor);
 document.querySelector("input[name=btnDirectorNuevo]").addEventListener("click",añadirPersonaNuevaDirector);
 document.querySelector("input[name=btnDirectorExistente]").addEventListener("click",añadirPersonaExistenteDirector);
-document.querySelector("#txtAddDuracion").addEventListener("keypress", soloNumeros);
+document.querySelector("#txtAddDuracion").addEventListener("keypress", soloNumerosA);
 limpiarErroresAñadir();
 //DATEPICKER FECHA ESTRENO
 $("#txtAddAnio").datepicker({
@@ -24,11 +25,19 @@ function rellenarDesplegableGeneroA() {
 
 function procesoRespuestaGetGenerosA(sHTML) {
     localStorage["generos"] = sHTML;
-    $("#capaCriterios select").html(localStorage["generos"]);
+    $("#datosComunes select").html(localStorage["generos"]);
+}
+
+function procesoAñadirProduccion(){
+	alert("añadir produccion");
+}
+
+function validarProduccion(){
+	
 }
 
 function añadirProduccion(){
-	alert("añadir produccion");
+	
 }
 
 function añadirPersonaNuevaActor(){
@@ -146,7 +155,12 @@ function añadirPersonaExistenteActor(){
 	oCapaFormulario.classList.add("row");
 	var oColumna=document.createElement("div");
 	oColumna.classList.add("col-10");
-	oColumna.appendChild(getSelectPersona());
+	var oSelect=document.createElement("select");
+	oSelect.classList.add("custom-select");
+	oSelect.classList.add("custom-select-sm");
+	oSelect.name="selectPersona";
+	oSelect.innerHTML=sOptionsPersonas;
+	oColumna.appendChild(oSelect);
 	oCapaFormulario.appendChild(oColumna);
 	oColumna=document.createElement("div");
 	oColumna.classList.add("col");
@@ -173,7 +187,12 @@ function añadirPersonaExistenteDirector(){
 	oCapaFormulario.classList.add("row");
 	var oColumna=document.createElement("div");
 	oColumna.classList.add("col-10");
-	oColumna.appendChild(getSelectPersona());
+	var oSelect=document.createElement("select");
+	oSelect.classList.add("custom-select");
+	oSelect.classList.add("custom-select-sm");
+	oSelect.name="selectPersona";
+	oSelect.innerHTML=sOptionsPersonas;
+	oColumna.appendChild(oSelect);
 	oCapaFormulario.appendChild(oColumna);
 	oColumna=document.createElement("div");
 	oColumna.classList.add("col");
@@ -191,17 +210,6 @@ function añadirPersonaExistenteDirector(){
 	document.getElementById("capaDirectores").appendChild(oCapa);
 }
 
-function eliminarCapa(oEvento){
-	var oE=oEvento || window.event;
-	var div=oE.target.parentElement.parentElement.parentElement;
-	if(div !== null){
-        while (div.hasChildNodes()){
-            div.removeChild(div.lastChild);
-		}
-		div.remove();
-	}
-}
-
 function limpiarErroresAñadir(){
     var oInputs=document.querySelectorAll("#frmAddProduccion .bg-warning");
     for(var i=0; i<oInputs.length;i++){
@@ -209,20 +217,27 @@ function limpiarErroresAñadir(){
     }
 }
 
-function getSelectPersona(){
-	var aPersonas=oUpoflix.aPersonas;
-	var oSelect=document.createElement("select");
-	oSelect.classList.add("custom-select");
-	oSelect.classList.add("custom-select-sm");
-	oSelect.name="selectPersona";
-	for(var i=0;i<aPersonas.length;i++){
-		var oOption=document.createElement("option");
-		oOption.value=aPersonas[i].sNombre.replace(/ /g, "-")+"_"+aPersonas[i].sApellido.replace(/ /g, "-");
-		oOption.textContent=aPersonas[i].sNombre+" "+aPersonas[i].sApellido;
-		oSelect.appendChild(oOption);
-	}
-	return oSelect;
+function rellenarDesplegablePersonas(){
+	$.ajax({
+        url: "./php/getPersonas.php",
+        dataType: 'json',
+        cache: false,
+        async: true, 
+        method: "GET",
+        success: procesarGetPersonas
+    });
 }
+
+function procesarGetPersonas(oDatos){
+    sOptionsPersonas = "";
+    for (var i = 0; i < oDatos.length; i++) {
+
+        sOptionsPersonas += '<option value="' + oDatos[i].id + '">';
+        sOptionsPersonas += oDatos[i].nombre+" "+oDatos[i].apellidos;
+        sOptionsPersonas += '</option>';
+    }
+}
+
 
 function añadirPerNoRep(aArray,oPersona){
     var array=aArray.filter(Persona=>Persona.sNombre==oPersona.sNombre && Persona.sApellido==oPersona.sApellido);
@@ -230,7 +245,7 @@ function añadirPerNoRep(aArray,oPersona){
 	aArray.push(oPersona);
 }
 
-function soloNumeros(elEvento) {
+function soloNumerosA(elEvento) {
     var oEvento = elEvento || window.event;
     var codigoChar = oEvento.charCode || oEvento.keyCode;
     var caracter = String.fromCharCode(codigoChar);

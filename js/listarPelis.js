@@ -4,15 +4,6 @@ function pedirListado() {
     oAjax.addEventListener("readystatechange", procesoRespuestalistadoPeliculasXML, false);
     oAjax.send(null);
 }
-function instanciarXHR() {
-    var xhttp = null;
-    if (window.XMLHttpRequest) {
-        xhttp = new XMLHttpRequest();
-    } else {
-        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    return xhttp;
-}
 
 function procesoRespuestalistadoPeliculasXML() {
     var oAjax = this;
@@ -82,7 +73,37 @@ function construirListado(oXML){
         oCelda = oFila.insertCell(-1);
         oCelda.colSpan=4;
         oCelda.classList.add("col-12");
-        //oCelda.appendChild(crearCapaMasDatos(aPelis[i]));
+
+        var oCapaDatos=document.createElement("div");
+        oCapaDatos.id=aPelis[i].querySelector("titulo").textContent.replace(/ /g, "-");
+        oCapaDatos.classList.add("d-none");
+    
+        var oResumen=document.createElement("p");
+        oResumen.textContent=aPelis[i].querySelector("resumen").textContent;
+        oCapaDatos.appendChild(oResumen);
+    
+        var oLista=document.createElement("ul");
+        var aActores=aPelis[i].querySelectorAll("actor");
+        for(var j=0; j<aActores.length;j++){
+            var actor=document.createElement("li");
+            actor.textContent=aActores[j].querySelector("nombre").textContent+" "+aActores[j].querySelector("apellidos").textContent;
+            oLista.appendChild(actor);
+        }
+        oCapaDatos.appendChild(oLista);
+
+        oLista=document.createElement("ul");
+        var aDirectores=aPelis[i].querySelectorAll("director");
+        for(var j=0; j<aDirectores.length;j++){
+            var director=document.createElement("li");
+            director.textContent=aDirectores[j].querySelector("nombre").textContent+" "+aDirectores[j].querySelector("apellidos").textContent;
+            oLista.appendChild(director);
+        }
+        oCapaDatos.appendChild(oLista);
+
+        var oAnio=document.createElement("p");
+        oAnio.textContent=aPelis[i].querySelector("estreno").textContent;
+        oCapaDatos.appendChild(oAnio);
+        oCelda.appendChild(oCapaDatos);
     }
     oColumnaDatos.appendChild(oTabla);
     $("#contenido").append(oColumnaDatos);
@@ -113,6 +134,7 @@ function crearAcciones(titulo){
         oBoton.type="button";
         oBoton.classList.add("btn");
         oBoton.classList.add("btn-sm");
+        //COMPROBAR SI ESTÁ ENTRE LAS PELICULAS FAVORITAS
         var aFavs=aPeliculasFavoritas;
         if(aFavs.length>0){
             oBoton.classList.add("btn-danger");
@@ -151,32 +173,21 @@ function crearAcciones(titulo){
 function eliminarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
-    if(oUpoflix.eliminarFavorito(sTitulo.replace(/-/g, " "))){
-        alert("Película eliminada de favoritos");
-        listarPelis();
-    }else{
-        alert("Error al eliminar, inténtelo de nuevo.");
-    }
+    //ELIMINAR DE FAVORITO
+    alert("falta eliminar favorito");
+
 }
 
 function agregarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
-    if(oUpoflix.añadirFavorito(sTitulo.replace(/-/g, " "))){
-        alert("Película agregada a favoritos");
-        listarPelis();
-    }else{
-        alert("Error al agregar, inténtelo de nuevo.");
-    }
+    //AGREGAR A FAVORITO
+    alert("falta agregar favorito");
 }
 
 function eliminarPeli(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
-    if(oUpoflix.bajaProduccion(sTitulo.replace(/-/g, " "))){
-        alert("Película eliminada de recursos.");
-        listarPelis();
-    }else{
-        alert("Error al eliminar, inténtelo de nuevo.");
-    }
+    //ELIMINAR PRODUCCION
+    alert("falta eliminar produccion");
 }

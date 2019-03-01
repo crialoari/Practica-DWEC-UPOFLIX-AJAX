@@ -79,17 +79,17 @@ function cargarModificarProduccion(oEvento){
     
     $(".row").hide();
     $('#capaModificarProduccion').show();
-    if($('#capaAddProduccion div').size() == 0) 
+    if($('#capaModificarProduccion div').size() == 0) 
         $("#capaModificarProduccion").load("formularios/modificarProduccion.html", function(){
             document.querySelector("#frmModificarProduccion").dataset.titulo=oE.target.parentElement.dataset.produccion;
             $.getScript("js/modProduccion.js");});
     else{
-        frmAddProduccion.reset();
+        frmModificarProduccion.reset();
         $(".elegir-actor").remove();
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
-        cargarDatos();
+        cargarDatosProduccion();
     }
 }
 
@@ -97,6 +97,34 @@ function cargarEditarElenco(){
     $(".row").hide();
     $("#contenido").empty();
     $("#contenido").show();
-    //GET DATOS TODAS LAS PERSONAS DE BBDD
-    //FORMAR HTML
+    $.ajax({
+        url: "./php/getPersonas.php",
+        dataType: 'json',
+        cache: false,
+        async: true, 
+        method: "GET",
+        success: procesarEditarPersonas
+    });
+}
+
+//necesarias para varios archivos
+function eliminarCapa(oEvento){
+    var oE=oEvento || window.event;
+    var div=oE.target.parentElement.parentElement.parentElement;
+    if(div !== null){
+        while (div.hasChildNodes()){
+            div.removeChild(div.lastChild);
+        }
+        div.remove();
+    }
+}
+
+function instanciarXHR() {
+    var xhttp = null;
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhttp;
 }

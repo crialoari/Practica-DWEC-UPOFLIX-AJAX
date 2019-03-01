@@ -42,7 +42,7 @@ function cargarMenuNavegacion(){
 	document.querySelector("#menuNavegacion li:nth-child(2) a").addEventListener("click",cargarBuscar);
 	//comprobar si es administrador para añadir funciones
 	if(oUsuarioActivo!=null && oUsuarioActivo.sRol=="admin"){
-		crearEnlaceMenuNavegacion("Añadir recursos");
+		crearEnlaceMenuNavegacion("Añadir producción");
 		document.querySelector("#menuNavegacion li:nth-child(3) a").addEventListener("click",cargarAñadirProduccion);
 		crearEnlaceMenuNavegacion("Editar elenco");
 		document.querySelector("#menuNavegacion li:nth-child(4) a").addEventListener("click",cargarEditarElenco);
