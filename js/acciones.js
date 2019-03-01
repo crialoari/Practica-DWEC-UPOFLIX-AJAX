@@ -11,9 +11,7 @@ function cargarPelisFavoritas(){
     $(".row").hide();
     $("#contenido").empty();
     $("#contenido").show();
-    //ENVIAR USUARIO ACTIVO
-    //GET TODAS LAS PRODUCCIONES PUNTUADAS
-    //FORMAR HTML
+    pedirListadoFavs();
 }
 
 function cerrarSesion(oEvento){
@@ -45,8 +43,6 @@ function listarPelis(){
     $("#contenido").empty();
     $("#contenido").show();
     pedirListado();
-    //GET DATOS TODAS LAS PRODUCCIONES DE BBDD
-    //FORMAR HTML
 }
 
 function cargarBuscar(){
@@ -149,4 +145,22 @@ function validarAñadirPersona(oFormulario){
         }
     }
     return bValido;
+}
+
+function crearPuntuacion(nota){
+    var oCapaPuntuacion=document.createElement("div");
+    var oPuntuacion=document.createElement("p");
+    oPuntuacion.textContent=(nota=="0" ? "Sin puntuación" : nota);
+    var oStar=document.createElement("span");
+    oStar.classList.add("puntuacion");
+    oCapaPuntuacion.appendChild(oStar);
+    oCapaPuntuacion.appendChild(oPuntuacion);
+    return oCapaPuntuacion;
+}
+
+function eliminarPeli(oEvento){
+    var oE = oEvento || window.event;
+    var sTitulo=oE.target.parentElement.dataset.produccion;
+    //ELIMINAR PRODUCCION
+    alert("falta eliminar produccion");
 }

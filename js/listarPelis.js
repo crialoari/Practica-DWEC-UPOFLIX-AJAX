@@ -64,7 +64,7 @@ function construirListado(oXML){
         oCelda = oFila.insertCell(-1);
         oCelda.textContent = aPelis[i].querySelector("genero").textContent;
         oCelda = oFila.insertCell(-1);
-        //oCelda.appendChild(crearPuntuacion(aPelis[i]));
+        oCelda.appendChild(crearPuntuacion(aPelis[i].querySelector("puntuacion").textContent));
         oCelda = oFila.insertCell(-1);
         oCelda.appendChild(crearAcciones(aPelis[i].querySelector("titulo").textContent));
 
@@ -183,11 +183,4 @@ function agregarPeliFavNavegacion(oEvento){
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //AGREGAR A FAVORITO
     alert("falta agregar favorito");
-}
-
-function eliminarPeli(oEvento){
-    var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion;
-    //ELIMINAR PRODUCCION
-    alert("falta eliminar produccion");
 }

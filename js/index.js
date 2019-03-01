@@ -1,5 +1,5 @@
 //oUsuarioActivo=null;
-oUsuarioActivo={nombre: "cris"};
+oUsuarioActivo={user: "cris"};
 oUsuarioActivo.sRol="admin";
 aPeliculasFavoritas=[];
 
@@ -17,7 +17,7 @@ function cargarMenuUsuario(){
 	oMenuUsuario=document.querySelector("#menuUsuario");
 	if(oUsuarioActivo!=null){
 		//usuario registrado
-		crearEnlaceMenuUsuario(oUsuarioActivo.sUser);
+		crearEnlaceMenuUsuario(oUsuarioActivo.user);
 		document.querySelector("#menuUsuario li:first-child a").addEventListener("click", cargarDatosUsuario);
 		crearEnlaceMenuUsuario("Mis pelis");
 		document.querySelector("#menuUsuario li:nth-child(2) a").addEventListener("click", cargarPelisFavoritas);

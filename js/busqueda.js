@@ -1,5 +1,6 @@
-//document.querySelector("#capaBusqueda input[type=button]").addEventListener("click", buscar);
-document.querySelector("#capaBusqueda input[type=button]").addEventListener("click", function(){alert("resultados busqueda");});
+document.querySelector("#capaBusqueda #btnBuscar").addEventListener("click", buscar);
+document.querySelector("#capaBusqueda #btnBorrar").addEventListener("click", function(){document.querySelector("#frmABuscador").reset();});
+
 document.querySelector("input#txtPuntuacionMinima").addEventListener("keypress", soloPuntuacion);
 rellenarDesplegableGenero();
 
@@ -46,50 +47,26 @@ function procesoRespuestaGetGeneros(sHTML) {
 }
 
 function buscar(){
-	document.querySelector("#capaResultado").empty();
-	var oTitulo=document.createElement("h4");
-	oTitulo.classList.add("text-warning");
-	oTitulo.textContent="Resultados:";
-	document.querySelector("#capaResultado").appendChild(oTitulo);
 	var frmFormulario=document.querySelector("#frmABuscador");
-	var sTipo=document.querySelector("#frmABuscador input:checked").value;
-	var sGenero=frmFormulario.selectGenero.value;
-	var sDate=Date.parse(frmFormulario.busqfechaInicio.value);
-	var dFechaInicio=(isNaN(sDate) ? null : new Date(sDate));
-	sDate=Date.parse(frmFormulario.busqfechaFin.value);
-	var dFechaFin=(isNaN(sDate) ? null : new Date(sDate));
-	var iPuntuacion=(frmFormulario.txtPuntuacionMinima.value=="" ? 0 : parseInt(frmFormulario.txtPuntuacionMinima.value, 10));
+	var oCriterios = {
+        genero: frmFormulario.selectGenero.value,
+        from: frmFormulario.busqfechaInicio.value,
+        to: frmFormulario.busqfechaFin.value,
+        puntuacion: frmFormulario.txtPuntuacionMinima.value
+    };
+    
+    var sParametros = "criterios=" + JSON.stringify(oCriterios);
 
-	switch (sTipo) {
-		case "all":
-			var aResultadoPelis=oUpoflix.buscarPelicula(sGenero,dFechaInicio,dFechaFin,iPuntuacion);
-			var aResultadoSeries=oUpoflix.buscarSerie(sGenero,dFechaInicio,dFechaFin,iPuntuacion);
-			var aResultado=aResultadoPelis.concat(aResultadoSeries);
-			if(aResultado.length==0){
-				document.querySelector("#capaResultado").textContent="La búsqueda no ha devuelto resultados";
-			}else{
-				document.querySelector("#capaResultado").appendChild(mostrarResultados(aResultado));
-			}
-			break;
-		case "Pelicula":
-			var aResultado=oUpoflix.buscarPelicula(sGenero,dFechaInicio,dFechaFin,iPuntuacion);
-			if(aResultado.length==0){
-				document.querySelector("#capaResultado").textContent="La búsqueda no ha devuelto resultados";
-			}else{
-				document.querySelector("#capaResultado").appendChild(mostrarResultados(aResultado));
-			}
-			break;
-		case "Serie":
-			var aResultado=oUpoflix.buscarSerie(sGenero,dFechaInicio,dFechaFin,iPuntuacion);
-			if(aResultado.length==0){
-				document.querySelector("#capaResultado").textContent="La búsqueda no ha devuelto resultados";
-			}else{
-				document.querySelector("#capaResultado").appendChild(mostrarResultados(aResultado));
-			}
-			break;
-		default:
-			alert("Error desconocido, vuelve a intentarlo");
-			break;
+    $.get("./php/listadoPeliculasXML.php", sParametros, procesoRespuestaBusquedaXML, 'xml');
+}
+
+function procesoRespuestaBusquedaXML(oXML){
+	$("#capaResultado").empty();
+	var aProducciones=oXML.querySelectorAll("produccion");
+	if(aProducciones.length>0){
+		document.querySelector("#capaResultado").appendChild(mostrarResultados(aProducciones));
+	}else{
+		document.querySelector("#capaResultado").textContent="La búsqueda no ha devuelto resultados";
 	}
 }
 
@@ -105,17 +82,13 @@ function mostrarResultados(aProducciones){
     oCelda.textContent = "Título";
     oFila.appendChild(oCelda);
     oCelda = document.createElement("TH");
-    oCelda.textContent = "Tipo";
-    oFila.appendChild(oCelda);
-    oCelda = document.createElement("TH");
     oCelda.textContent = "Género";
     oFila.appendChild(oCelda);
-    
     oCelda = document.createElement("TH");
     oCelda.textContent = "Puntuación";
     oFila.appendChild(oCelda);
     oCelda = document.createElement("TH");
-    oCelda.textContent = "Año";
+    oCelda.textContent = "Estreno";
     oFila.appendChild(oCelda);
     oCelda = document.createElement("TH");
     oCelda.textContent = "Acciones";
@@ -127,48 +100,41 @@ function mostrarResultados(aProducciones){
 	for(var i=0; i<aProducciones.length;i++){
         oFila = oTBody.insertRow(-1);
     	oCelda = oFila.insertCell(-1);
-    	oCelda.textContent = aProducciones[i].sTitulo;
+    	oCelda.textContent = aProducciones[i].querySelector("titulo").textContent;
     	oCelda = oFila.insertCell(-1);
-    	oCelda.textContent = (aProducciones[i] instanceof Serie ? "Serie" : "Película");
+    	oCelda.textContent = aProducciones[i].querySelector("genero").textContent;
     	oCelda = oFila.insertCell(-1);
-    	oCelda.textContent = aProducciones[i].sGenero;
+    	oCelda.appendChild(crearPuntuacion(aProducciones[i].querySelector("puntuacion").textContent));
     	oCelda = oFila.insertCell(-1);
-    	oCelda.appendChild(crearPuntuacion(aProducciones[i]));
+    	oCelda.textContent = (aProducciones[i].querySelector("estreno").textContent);
     	oCelda = oFila.insertCell(-1);
-    	oCelda.textContent = (aProducciones[i] instanceof Serie ? aProducciones[i].dFechaInicio.getFullYear()+"-"+aProducciones[i].dFechaFin.getFullYear() : aProducciones[i].iAñoEstreno);
-    	oCelda = oFila.insertCell(-1);
-    	oCelda.appendChild(crearAccionesBusqueda(aProducciones[i]));
+    	oCelda.appendChild(crearAccionesBusqueda(aProducciones[i].querySelector("titulo").textContent));
     }
 	return oTabla;
 }
 
-function crearAccionesBusqueda(oProduccion){
-var oFormulario=document.createElement("form");
-    oFormulario.dataset.produccion=oProduccion.sTitulo.replace(/ /g, "-");
+function crearAccionesBusqueda(titulo){
+    var oFormulario=document.createElement("form");
+    oFormulario.dataset.produccion=titulo.replace(/ /g, "-");
    
-    if(oUpoflix.oUsuarioActivo!=null){
+    if(oUsuarioActivo!=null){
 		var oBoton=document.createElement("INPUT");
 	    oBoton.type="button";
 	    oBoton.classList.add("btn");
 	    oBoton.classList.add("btn-sm");
-	    var aFavs=oUpoflix.oUsuarioActivo.aFavoritos.filter(Produccion => Produccion==oProduccion);
+	    //COMPROBAR SI ESTÁ ENTRE LAS PELICULAS FAVORITAS
+        var aFavs=aPeliculasFavoritas;
 	    if(aFavs.length>0){
 	    	oBoton.classList.add("btn-danger");
-	    	if(oProduccion instanceof Serie)
-		    	oBoton.addEventListener("click", eliminarSerieFavNavegacion);
-		    else
-		    	oBoton.addEventListener("click", eliminarPeliFavNavegacion);
+	    	oBoton.addEventListener("click", eliminarPeliFavNavegacion);
 	    }else{
 			oBoton.classList.add("btn-outline-danger");
-	    	if(oProduccion instanceof Serie)
-		    	oBoton.addEventListener("click", agregarSerieFavNavegacion);
-		    else
-		    	oBoton.addEventListener("click", agregarPeliFavNavegacion);
+	    	oBoton.addEventListener("click", agregarPeliFavNavegacion);
 	    }
 	    oBoton.classList.add("mr-1");
 	    oBoton.value="❤";
 	    oFormulario.appendChild(oBoton);
-	    if(oUpoflix.oUsuarioActivo.sRol=="admin"){
+	    if(oUsuarioActivo.sRol=="admin"){
 			oBoton=document.createElement("INPUT");
 		    oBoton.type="button";
 		    oBoton.classList.add("btn");
@@ -176,10 +142,7 @@ var oFormulario=document.createElement("form");
 		    oBoton.classList.add("btn-outline-dark");
 		    oBoton.classList.add("mr-1");
 		    oBoton.value="X";
-		    if(oProduccion instanceof Serie)
-		    	oBoton.addEventListener("click", eliminarSerie);
-		    else
-		    	oBoton.addEventListener("click", eliminarPeli);
+	    	oBoton.addEventListener("click", eliminarPeli);
 		    oFormulario.appendChild(oBoton);
 
 			oBoton=document.createElement("INPUT");
@@ -188,11 +151,25 @@ var oFormulario=document.createElement("form");
 		    oBoton.classList.add("btn-sm");
 		    oBoton.classList.add("btn-outline-dark");
 		    oBoton.value="edit";
-			oBoton.addEventListener("click", editar);
+			oBoton.addEventListener("click", cargarModificarProduccion);
 		    oFormulario.appendChild(oBoton);
 		}
 	}
     return oFormulario;
+}
+
+function eliminarPeliFavNavegacion(oEvento){
+    var oE = oEvento || window.event;
+    var sTitulo=oE.target.parentElement.dataset.produccion;
+    //ELIMINAR DE FAVORITO
+    alert("falta eliminar favorito");
+}
+
+function agregarPeliFavNavegacion(oEvento){
+    var oE = oEvento || window.event;
+    var sTitulo=oE.target.parentElement.dataset.produccion;
+    //AGREGAR A FAVORITO
+    alert("falta agregar favorito");
 }
 
 function getSelectGenero(){
