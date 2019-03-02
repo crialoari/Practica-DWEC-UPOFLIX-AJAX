@@ -75,7 +75,11 @@ function construirListado(oXML){
         oCelda.classList.add("col-12");
 
         var oCapaDatos=document.createElement("div");
-        oCapaDatos.id=aPelis[i].querySelector("titulo").textContent.replace(/ /g, "-");
+        var idcapa=aPelis[i].querySelector("titulo").textContent.replace(/ /g, "-");
+        idcapa=idcapa.replace(":","_-_");
+        idcapa=idcapa.replace("¿","__");
+        idcapa=idcapa.replace("?","_");
+        oCapaDatos.id=idcapa;
         oCapaDatos.classList.add("d-none");
     
         var oResumen=document.createElement("p");
@@ -111,7 +115,11 @@ function construirListado(oXML){
 
 function crearAcciones(titulo){
     var oFormulario=document.createElement("form");
-    oFormulario.dataset.produccion=titulo.replace(/ /g, "-");
+    var dataform=titulo.replace(/ /g, "-");
+    dataform=dataform.replace(":","_-_");
+    dataform=dataform.replace("¿","__");
+    dataform=dataform.replace("?","_");
+    oFormulario.dataset.produccion=dataform;
 
     var oBoton=document.createElement("INPUT");
     oBoton.type="button";

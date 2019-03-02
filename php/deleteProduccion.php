@@ -14,7 +14,7 @@ mysqli_set_charset($conexion,"utf8");
 
 $sql = "DELETE FROM `producciones` WHERE producciones.titulo='".$titulo."'";
 $resultado = mysqli_query($conexion,$sql);
-if(mysqli_affected_rows($conexion)<0){
+if(mysqli_affected_rows($conexion)<=0){
 	$respuesta["error"] = 1;
     $respuesta["mensaje"] = "Error al eliminar: ".mysqli_error($conexion);
 }
@@ -43,7 +43,6 @@ if(mysqli_affected_rows($conexion)<0){
 if(sizeof($respuesta)==0){
 	$respuesta["error"] = 0;
     $respuesta["mensaje"] = "Producción eliminada";
-     $respuesta["titulo"]=$titulo;
 }
 
 echo json_encode($respuesta);

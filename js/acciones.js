@@ -73,19 +73,24 @@ function cargarAñadirProduccion(){
 
 function cargarModificarProduccion(oEvento){
     var oE = oEvento || window.event;
-    
     $(".row").hide();
     $('#capaModificarProduccion').show();
+    var sTituloAntiguo=oE.target.parentElement.dataset.produccion.replace("_-_",":")
+    sTituloAntiguo=sTituloAntiguo.replace(/-/g, " ");
+    sTituloAntiguo=sTituloAntiguo.replace("__","¿");
+    sTituloAntiguo=sTituloAntiguo.replace("_","?");
     if($('#capaModificarProduccion div').size() == 0) 
         $("#capaModificarProduccion").load("formularios/modificarProduccion.html", function(){
-            document.querySelector("#frmModificarProduccion").dataset.titulo=oE.target.parentElement.dataset.produccion;
+            document.querySelector("#frmModificarProduccion #txtTituloAntiguo").value=sTituloAntiguo;
             $.getScript("js/modProduccion.js");});
     else{
         frmModificarProduccion.reset();
+        document.querySelector("#frmModificarProduccion #txtTituloAntiguo").value=sTituloAntiguo;
         $(".elegir-actor").remove();
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
+        $("#datosEstrenoDuracionMod").show();
         cargarDatosProduccion();
     }
 }
@@ -102,86 +107,4 @@ function cargarEditarElenco(){
         method: "GET",
         success: procesarEditarPersonas
     });
-
-}
-
-//necesarias para varios archivos
-function eliminarCapa(oEvento){
-    var oE=oEvento || window.event;
-    var div=oE.target.parentElement.parentElement.parentElement;
-    if(div !== null){
-        while (div.hasChildNodes()){
-            div.removeChild(div.lastChild);
-        }
-        div.remove();
-    }
-}
-
-function instanciarXHR() {
-    var xhttp = null;
-    if (window.XMLHttpRequest) {
-        xhttp = new XMLHttpRequest();
-    } else {
-        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    return xhttp;
-}
-
-function validarAñadirPersona(oFormulario){
-    oFormulario.txtNombre.classList.remove("bg-warning");
-    oFormulario.txtApellido.classList.remove("bg-warning");
-    var sNombre=oFormulario.txtNombre.value.trim();
-    var sApellido=oFormulario.txtApellido.value.trim();
-    var bValido=true;
-    if(sNombre==""){
-        bValido=false;
-        oFormulario.txtNombre.classList.add("bg-warning");
-        oFormulario.txtNombre.focus();
-    }
-    if(sApellido==""){
-        oFormulario.txtApellido.classList.add("bg-warning");
-        if(bValido){
-            bValido=false;
-            oFormulario.txtApellido.focus();
-        }
-    }
-    return bValido;
-}
-
-function crearPuntuacion(nota){
-    var oCapaPuntuacion=document.createElement("div");
-    var oPuntuacion=document.createElement("p");
-    oPuntuacion.textContent=(nota=="0" ? "Sin puntuación" : nota);
-    var oStar=document.createElement("span");
-    oStar.classList.add("puntuacion");
-    oCapaPuntuacion.appendChild(oStar);
-    oCapaPuntuacion.appendChild(oPuntuacion);
-    return oCapaPuntuacion;
-}
-
-function eliminarPeli(oEvento){
-    var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion.replace("-", " ");
-    
-        $.ajax({
-            url: "./php/deleteProduccion.php",
-            dataType: 'json',
-            cache: false,
-            async: true, 
-            data: "titulo="+sTitulo,
-            method: "POST",
-            success: procesoRespuestaEliminarPeli
-        });
-}
-
-function procesoRespuestaEliminarPeli(oDatos) {
-    if (oDatos.error == 0)
-        listarPelis();
-    alert(oDatos.titulo);
-}
-
-function mostrarMasDatos(oEvento){
-    var oE = oEvento || window.event;
-    var sProduccion=oE.target.parentElement.dataset.produccion;
-    document.querySelector("div#"+sProduccion).classList.toggle("d-none");
 }

@@ -197,10 +197,7 @@ function respuestaEditarPersona(oDatos, sStatus, oXHR) {
 }
 
 function añadirFormularioAltaPersona(){
-	document.querySelector("#capaAltaPerson").appendChild(getCapaAltaPersona(añadirPersonaDesdeElenco));
-}
-
-function getCapaAltaPersona(sMetodo){
+	var oCapaContenedor=document.querySelector("#capaAltaPerson");
 	var oCapaAltaPersona=document.createElement("div");
 	oCapaAltaPersona.classList.add("altaPersona");
 	oCapaAltaPersona.classList.add("p-2");
@@ -239,21 +236,38 @@ function getCapaAltaPersona(sMetodo){
 	oBoton.classList.add("mr-1");
 	oBoton.classList.add("mt-1");
 	oBoton.value="Añadir";
-	oBoton.addEventListener("click", sMetodo);
+	oBoton.addEventListener("click", añadirPersonaDesdeElenco);
     capaFrm.appendChild(oBoton);
 
     oFormulario.appendChild(capaFrm);
 	oCapaAltaPersona.appendChild(oFormulario);
-
-	return oCapaAltaPersona;
+	oCapaContenedor.appendChild(oCapaAltaPersona);
 }
 
 function añadirPersonaDesdeElenco(oEvento){
 	var oE = oEvento || window.event;
-	var oFormularioPadre=oE.target.parentElement.parentElement;
-	if(validarAñadirPersona(oFormularioPadre)){
-		var sNombre=oFormularioPadre.txtNombre.value.trim();
-		var sApellido=oFormularioPadre.txtApellido.value.trim();
+	var oFormulario=oE.target.parentElement.parentElement;
+    oFormulario.txtNombre.classList.remove("bg-warning");
+    oFormulario.txtApellido.classList.remove("bg-warning");
+    var sNombre=oFormulario.txtNombre.value.trim();
+    var sApellido=oFormulario.txtApellido.value.trim();
+    var bValido=true;
+    if(sNombre==""){
+        bValido=false;
+        oFormulario.txtNombre.classList.add("bg-warning");
+        oFormulario.txtNombre.focus();
+    }
+    if(sApellido==""){
+        oFormulario.txtApellido.classList.add("bg-warning");
+        if(bValido){
+            bValido=false;
+            oFormulario.txtApellido.focus();
+        }
+    }
+
+	if(bValido){
+		var sNombre=oFormulario.txtNombre.value.trim();
+		var sApellido=oFormulario.txtApellido.value.trim();
 		var sParametros = "nombre=" + sNombre;
 		sParametros += "&apellidos=" + sApellido;
 		sParametros = encodeURI(sParametros);
@@ -280,7 +294,6 @@ function procesoRespuestaValidarPersona(sRespuesta) {
     } else {
         PersonaExiste = false;
     }
-
 }
 
 function respuestañadirPersona(oDatos, sStatus, oXHR) {

@@ -1,8 +1,8 @@
+rellenarDesplegableGenero();
 document.querySelector("#capaBusqueda #btnBuscar").addEventListener("click", buscar);
 document.querySelector("#capaBusqueda #btnBorrar").addEventListener("click", function(){document.querySelector("#frmABuscador").reset();});
-
 document.querySelector("input#txtPuntuacionMinima").addEventListener("keypress", soloPuntuacion);
-rellenarDesplegableGenero();
+
 
 //DATEPICKER FECHAS BUSQUEDA
     $("#busqfechaInicio").datepicker({
@@ -33,19 +33,6 @@ rellenarDesplegableGenero();
        return date;
     }
   
-function rellenarDesplegableGenero() {
-    if (localStorage["generos"] != undefined) {
-        $("#capaCriterios select").html(localStorage["generos"]);
-    } else {
-        $.get("./php/getGeneros.php", null, procesoRespuestaGetGeneros, 'html');
-    }
-}
-
-function procesoRespuestaGetGeneros(sHTML) {
-    localStorage["generos"] = sHTML;
-    $("#capaCriterios select").html(localStorage["generos"]);
-}
-
 function buscar(){
 	var frmFormulario=document.querySelector("#frmABuscador");
 	var oCriterios = {
@@ -162,35 +149,14 @@ function eliminarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //ELIMINAR DE FAVORITO
-    alert("falta eliminar favorito");
+    alert("falta eliminar favorito busq");
 }
 
 function agregarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //AGREGAR A FAVORITO
-    alert("falta agregar favorito");
-}
-
-function getSelectGenero(){
-	//carga con localstorage
-	var aGeneros=["Acción","Aventuras","Comedia","Drama","Terror","Musical","Ciencia ficción","Bélica","Western","Thriller","Infantil"];
-	aGeneros=aGeneros.sort();
-	var oSelect=document.createElement("select");
-	oSelect.classList.add("custom-select");
-	oSelect.classList.add("custom-select-sm");
-	oSelect.name="selectGenero";
-	var oOption=document.createElement("option");
-	oOption.value="cualquiera";
-	oOption.textContent="Todos los géneros";
-	oSelect.appendChild(oOption);
-	for(var i=0;i<aGeneros.length;i++){
-		oOption=document.createElement("option");
-		oOption.value=aGeneros[i];
-		oOption.textContent=aGeneros[i];
-		oSelect.appendChild(oOption);
-	}
-	return oSelect;
+    alert("falta agregar favorito busq");
 }
 
 function soloPuntuacion(elEvento) {
