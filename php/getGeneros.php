@@ -13,7 +13,7 @@ mysqli_set_charset($conexion,"utf8");
 $sql = "SELECT * FROM `generos` ORDER BY `generos`.`genero` ASC ";
 $resultado = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 
-$optionsGeneros = "";
+$optionsGeneros = "<option value='0'>Selecciona...</option>";
 
 while ($fila = mysqli_fetch_array($resultado)) {
     $optionsGeneros .= '<option value="'.$fila["genero"].'">'.$fila["genero"].'</option>';

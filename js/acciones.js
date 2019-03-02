@@ -11,9 +11,7 @@ function cargarPelisFavoritas(){
     $(".row").hide();
     $("#contenido").empty();
     $("#contenido").show();
-    //ENVIAR USUARIO ACTIVO
-    //GET TODAS LAS PRODUCCIONES PUNTUADAS
-    //FORMAR HTML
+    pedirListadoFavs();
 }
 
 function cerrarSesion(oEvento){
@@ -45,8 +43,6 @@ function listarPelis(){
     $("#contenido").empty();
     $("#contenido").show();
     pedirListado();
-    //GET DATOS TODAS LAS PRODUCCIONES DE BBDD
-    //FORMAR HTML
 }
 
 function cargarBuscar(){
@@ -71,25 +67,31 @@ function cargarAñadirProduccion(){
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
+        $("#datosEstrenoDuracion").show();
     }
 }
 
 function cargarModificarProduccion(oEvento){
     var oE = oEvento || window.event;
-    
     $(".row").hide();
     $('#capaModificarProduccion').show();
-    if($('#capaAddProduccion div').size() == 0) 
+    var sTituloAntiguo=oE.target.parentElement.dataset.produccion.replace("_-_",":")
+    sTituloAntiguo=sTituloAntiguo.replace(/-/g, " ");
+    sTituloAntiguo=sTituloAntiguo.replace("__","¿");
+    sTituloAntiguo=sTituloAntiguo.replace("_","?");
+    if($('#capaModificarProduccion div').size() == 0) 
         $("#capaModificarProduccion").load("formularios/modificarProduccion.html", function(){
-            document.querySelector("#frmModificarProduccion").dataset.titulo=oE.target.parentElement.dataset.produccion;
+            document.querySelector("#frmModificarProduccion #txtTituloAntiguo").value=sTituloAntiguo;
             $.getScript("js/modProduccion.js");});
     else{
-        frmAddProduccion.reset();
+        frmModificarProduccion.reset();
+        document.querySelector("#frmModificarProduccion #txtTituloAntiguo").value=sTituloAntiguo;
         $(".elegir-actor").remove();
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
-        cargarDatos();
+        $("#datosEstrenoDuracionMod").show();
+        cargarDatosProduccion();
     }
 }
 
@@ -97,6 +99,12 @@ function cargarEditarElenco(){
     $(".row").hide();
     $("#contenido").empty();
     $("#contenido").show();
-    //GET DATOS TODAS LAS PERSONAS DE BBDD
-    //FORMAR HTML
+    $.ajax({
+        url: "./php/getPersonas.php",
+        dataType: 'json',
+        cache: false,
+        async: true, 
+        method: "GET",
+        success: procesarEditarPersonas
+    });
 }

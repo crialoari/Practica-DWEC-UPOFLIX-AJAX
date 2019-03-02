@@ -1,5 +1,5 @@
 //oUsuarioActivo=null;
-oUsuarioActivo={nombre: "cris"};
+oUsuarioActivo={user: "carlos"};
 oUsuarioActivo.sRol="admin";
 aPeliculasFavoritas=[];
 
@@ -17,7 +17,7 @@ function cargarMenuUsuario(){
 	oMenuUsuario=document.querySelector("#menuUsuario");
 	if(oUsuarioActivo!=null){
 		//usuario registrado
-		crearEnlaceMenuUsuario(oUsuarioActivo.sUser);
+		crearEnlaceMenuUsuario(oUsuarioActivo.user);
 		document.querySelector("#menuUsuario li:first-child a").addEventListener("click", cargarDatosUsuario);
 		crearEnlaceMenuUsuario("Mis pelis");
 		document.querySelector("#menuUsuario li:nth-child(2) a").addEventListener("click", cargarPelisFavoritas);
@@ -42,7 +42,7 @@ function cargarMenuNavegacion(){
 	document.querySelector("#menuNavegacion li:nth-child(2) a").addEventListener("click",cargarBuscar);
 	//comprobar si es administrador para añadir funciones
 	if(oUsuarioActivo!=null && oUsuarioActivo.sRol=="admin"){
-		crearEnlaceMenuNavegacion("Añadir recursos");
+		crearEnlaceMenuNavegacion("Añadir producción");
 		document.querySelector("#menuNavegacion li:nth-child(3) a").addEventListener("click",cargarAñadirProduccion);
 		crearEnlaceMenuNavegacion("Editar elenco");
 		document.querySelector("#menuNavegacion li:nth-child(4) a").addEventListener("click",cargarEditarElenco);
