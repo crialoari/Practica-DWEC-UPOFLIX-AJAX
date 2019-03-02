@@ -67,6 +67,7 @@ function cargarAñadirProduccion(){
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
+        $("#datosEstrenoDuracion").show();
     }
 }
 
@@ -160,7 +161,27 @@ function crearPuntuacion(nota){
 
 function eliminarPeli(oEvento){
     var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion;
-    //ELIMINAR PRODUCCION
-    alert("falta eliminar produccion");
+    var sTitulo=oE.target.parentElement.dataset.produccion.replace("-", " ");
+    
+        $.ajax({
+            url: "./php/deleteProduccion.php",
+            dataType: 'json',
+            cache: false,
+            async: true, 
+            data: "titulo="+sTitulo,
+            method: "POST",
+            success: procesoRespuestaEliminarPeli
+        });
+}
+
+function procesoRespuestaEliminarPeli(oDatos) {
+    if (oDatos.error == 0)
+        listarPelis();
+    alert(oDatos.titulo);
+}
+
+function mostrarMasDatos(oEvento){
+    var oE = oEvento || window.event;
+    var sProduccion=oE.target.parentElement.dataset.produccion;
+    document.querySelector("div#"+sProduccion).classList.toggle("d-none");
 }

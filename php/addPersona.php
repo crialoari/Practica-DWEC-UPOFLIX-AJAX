@@ -7,8 +7,8 @@ $usuario   = "root";
 $password  = "";
 
 //Recoger parametros
-$nombre = $_POST["nombre"];
-$apellidos = $_POST["apellidos"];
+$nombre = $_REQUEST["nombre"];
+$apellidos = $_REQUEST["apellidos"];
 $respuesta=[];
 
 // Creamos la conexión al servidor.

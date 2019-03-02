@@ -1,5 +1,5 @@
 //oUsuarioActivo=null;
-oUsuarioActivo={user: "cris"};
+oUsuarioActivo={user: "carlos"};
 oUsuarioActivo.sRol="admin";
 aPeliculasFavoritas=[];
 

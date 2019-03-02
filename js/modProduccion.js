@@ -1,5 +1,3 @@
-alert("hola");
-
 cargarDatosProduccion();
 rellenarDesplegableGeneroM();
 document.querySelector("#capaModificarProduccion input[name=btnModificar]").addEventListener("click",editarProduccion);

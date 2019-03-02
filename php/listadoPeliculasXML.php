@@ -1,5 +1,5 @@
 <?php
-require_once('getPuntuacion.php');
+require_once('getPuntuaciones.php');
 // Configuración BASE DE DATOS MYSQL
 $servidor  = "localhost";
 $basedatos = "upoflix";

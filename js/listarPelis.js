@@ -109,12 +109,6 @@ function construirListado(oXML){
     $("#contenido").append(oColumnaDatos);
 }
 
-function mostrarMasDatos(oEvento){
-    var oE = oEvento || window.event;
-    var sProduccion=oE.target.parentElement.dataset.produccion;
-    document.querySelector("div#"+sProduccion).classList.toggle("d-none");
-}
-
 function crearAcciones(titulo){
     var oFormulario=document.createElement("form");
     oFormulario.dataset.produccion=titulo.replace(/ /g, "-");
@@ -175,7 +169,6 @@ function eliminarPeliFavNavegacion(oEvento){
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //ELIMINAR DE FAVORITO
     alert("falta eliminar favorito");
-
 }
 
 function agregarPeliFavNavegacion(oEvento){
