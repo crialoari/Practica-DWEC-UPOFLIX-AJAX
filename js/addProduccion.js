@@ -47,7 +47,7 @@ function procesoAñadirProduccion(){
 function procesoRespuestaAddProduccion(oDatos, sStatus, oXHR) {
     if (oDatos.error == 0)
        	cargarAñadirProduccion();
-	alert(oDatos.mensaje);
+	crearDialog(oDatos.mensaje);
 }
 
 function validarProduccion(){
@@ -179,7 +179,7 @@ function validarProduccion(){
     }
 
     if (!bValido)
-        alert(sErrores);
+        crearDialog(sErrores);
     
     return bValido;
 }

@@ -149,14 +149,14 @@ function eliminarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //ELIMINAR DE FAVORITO
-    alert("falta eliminar favorito busq");
+    crearDialog("falta eliminar favorito busq");
 }
 
 function agregarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //AGREGAR A FAVORITO
-    alert("falta agregar favorito busq");
+    crearDialog("falta agregar favorito busq");
 }
 
 function soloPuntuacion(elEvento) {

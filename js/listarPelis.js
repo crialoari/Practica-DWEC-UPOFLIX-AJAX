@@ -176,12 +176,12 @@ function eliminarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //ELIMINAR DE FAVORITO
-    alert("falta eliminar favorito");
+    crearDialog("falta eliminar favorito");
 }
 
 function agregarPeliFavNavegacion(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //AGREGAR A FAVORITO
-    alert("falta agregar favorito");
+    crearDialog("falta agregar favorito");
 }

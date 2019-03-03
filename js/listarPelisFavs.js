@@ -181,7 +181,7 @@ function eliminarPeliFavUsuario(oEvento){
     var oE = oEvento || window.event;
     var sTitulo=oE.target.parentElement.dataset.produccion;
     //ELIMINAR DE FAVORITO
-    alert("falta eliminar favorito usuario");
+    crearDialog("falta eliminar favorito usuario");
 }
 
 function puntuarProduccion(oEvento){
@@ -192,8 +192,8 @@ function puntuarProduccion(oEvento){
     var oCapaTapar=oE.target.parentElement.lastElementChild;
     oCapaTapar.style.width=ancho+"px";
     if(oUpoflix.puntuar(iNota,sTitulo))
-	   alert("Puntuación añadida.");
+	   crearDialog("Puntuación añadida.");
     else
-        alert("Puntuación cambiada.");*/
-    alert("falta puntuar");
+        crearDialog("Puntuación cambiada.");*/
+    crearDialog("falta puntuar");
 }

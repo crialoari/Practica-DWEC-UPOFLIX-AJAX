@@ -1,3 +1,10 @@
+//DIALOG JQUERY UI
+function crearDialog(mensaje){
+    var capaDialog="<div title='Información'><p>"+mensaje+"</p></div>";
+    $(capaDialog).dialog(
+        {resizable:false,modal:true});
+}
+
 //INSTANCIAR OBJETO XHR
 function instanciarXHR() {
     var xhttp = null;

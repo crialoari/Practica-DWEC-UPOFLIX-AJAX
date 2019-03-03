@@ -137,7 +137,7 @@ function respuestaEliminarPersona(){
 		var oRespuesta = JSON.parse(oAjax.responseText);
     	if (oRespuesta.error == 0)
         	cargarEditarElenco();
-	    alert(oRespuesta.mensaje);
+	    crearDialog(oRespuesta.mensaje);
     }
 }
 
@@ -179,7 +179,7 @@ function aceptarEditarPersona(oEvento){
 	}
 
 	if(!bValido){
-		alert("Por favor rellena todos los campos");	
+		crearDialog("Por favor rellena todos los campos");	
 	}else{
 		var sParametros = "id=" + oFormularioPadre.dataset.persona;
 		sParametros += "&nuevoNombre=" + sNuevoNombre;
@@ -193,7 +193,7 @@ function aceptarEditarPersona(oEvento){
 function respuestaEditarPersona(oDatos, sStatus, oXHR) {
     if (oDatos.error == 0)
        	cargarEditarElenco();
-	alert(oDatos.mensaje);
+	crearDialog(oDatos.mensaje);
 }
 
 function añadirFormularioAltaPersona(){
@@ -284,7 +284,7 @@ function añadirPersonaDesdeElenco(oEvento){
 		$.post("./php/addPersona.php", sParametros, respuestañadirPersona, 'json');
 
 	}else{
-		alert("Debe rellenar todos los campos.");
+		crearDialog("Debe rellenar todos los campos.");
 	}
 }
 
@@ -299,5 +299,5 @@ function procesoRespuestaValidarPersona(sRespuesta) {
 function respuestañadirPersona(oDatos, sStatus, oXHR) {
     if (oDatos.error == 0)
        	cargarEditarElenco();
-	alert(oDatos.mensaje);
+	crearDialog(oDatos.mensaje);
 }

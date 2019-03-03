@@ -104,7 +104,7 @@ function editarProduccion(){
 function procesoRespuestaUpdateProduccion(oDatos, sStatus, oXHR){
 	if (oDatos.error == 0)
        	listarPelis();
-	alert(oDatos.mensaje);
+	crearDialog(oDatos.mensaje);
 }
 
 function validarModificar(){
@@ -236,7 +236,7 @@ function validarModificar(){
     }
 
     if (!bValido)
-        alert(sErrores);
+        crearDialog(sErrores);
     
     return bValido;
 }
