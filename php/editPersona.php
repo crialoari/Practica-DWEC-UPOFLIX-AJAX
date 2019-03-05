@@ -26,12 +26,12 @@ if ($fila[0] == 0){
 	}
 }else{
 	$respuesta["error"] = 1;
-    $respuesta["mensaje"] = "Ya existe una persona con esos datos";
+    $respuesta["mensaje"] = "Ya existe una persona con esos datos.";
 }
 
 if(sizeof($respuesta)==0){
 	$respuesta["error"] = 0;
-    $respuesta["mensaje"] = "Persona editada"; 
+    $respuesta["mensaje"] = "Datos modificados."; 
 }
 
 echo json_encode($respuesta);

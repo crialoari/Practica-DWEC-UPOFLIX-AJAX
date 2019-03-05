@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-03-2019 a las 05:30:38
+-- Tiempo de generación: 06-03-2019 a las 00:47:40
 -- Versión del servidor: 10.1.35-MariaDB
 -- Versión de PHP: 7.2.9
 
@@ -100,11 +100,12 @@ INSERT INTO `personas` (`id`, `nombre`, `apellidos`) VALUES
 (1, 'Steven', 'Spielberg'),
 (2, 'Harrison', 'Ford'),
 (3, 'Sean', 'Connery'),
-(4, 'Jennifer', 'Aniston'),
-(5, 'Courteney', 'Cox'),
-(6, 'Lisa', 'Kudrow'),
-(7, 'Matthew', 'Perry'),
-(8, 'Quentin', 'Tarantino');
+(10, 'Tim', 'Burton'),
+(16, 'Hayao', 'Miyazaki'),
+(24, 'James', 'Cameron'),
+(25, 'Ben', 'Lemon'),
+(26, 'Benito', 'Limon'),
+(27, 'Steve', 'Carell');
 
 -- --------------------------------------------------------
 
@@ -140,6 +141,15 @@ CREATE TABLE `puntuaciones` (
   `produccion` varchar(50) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `puntuaciones`
+--
+
+INSERT INTO `puntuaciones` (`nota`, `usuario`, `produccion`) VALUES
+(5, 'aledaw', 'En busca del arca perdida'),
+(0, 'carlos', 'En busca del arca perdida'),
+(3, 'crisdaw', 'En busca del arca perdida');
+
 -- --------------------------------------------------------
 
 --
@@ -160,6 +170,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`user`, `nombre`, `apellidos`, `email`, `password`, `rol`) VALUES
+('aledaw', 'Alejandro', 'Bocanegra', 'ale@gmail.com', 'Al3jandro', 'admin'),
 ('carlos', 'Carlos', 'Rodriguez', 'carlos@gmail.com', 'C4rl0s', 'user'),
 ('crisdaw', 'Cristina', 'Alonso', 'crisaloari@gmail.com', 'cr1St1na', 'admin');
 
@@ -198,6 +209,12 @@ ALTER TABLE `producciones`
   ADD PRIMARY KEY (`titulo`);
 
 --
+-- Indices de la tabla `puntuaciones`
+--
+ALTER TABLE `puntuaciones`
+  ADD PRIMARY KEY (`usuario`,`produccion`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -211,7 +228,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

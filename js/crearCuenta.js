@@ -1,5 +1,4 @@
-//document.querySelector("#capaCrearCuenta input[type=button]").addEventListener("click", crearCuenta);
-document.querySelector("#capaCrearCuenta input[type=button]").addEventListener("click", function(){alert("crear cuenta");});
+document.querySelector("#capaCrearCuenta input[type=button]").addEventListener("click", crearCuenta);
 
 function crearCuenta(){
     var frmFormulario=document.querySelector("#frmCrearCuenta");
@@ -17,14 +16,14 @@ function crearCuenta(){
     }
     //validar nombre
     var sNombre=frmFormulario.txtNNombre.value.trim();
-    var oExpReg=/^[a-zA-Z\s]{3,15}$/;
+    var oExpReg=/^[a-zA-ZÀ-ÿ\u00f1\u00d1]{3,15}$/;
     if(!oExpReg.test(sNombre)){
         frmFormulario.txtNNombre.classList.add("bg-warning");
         if(bValido){
         frmFormulario.txtNNombre.focus();
         bValido=false;
         }
-        sErrores+="-El nombre debe ser alfabético entre 3 y 15 caracteres.";
+        sErrores+="\n-El nombre debe ser alfabético entre 3 y 15 caracteres.";
     }
     //validar apellido
     var sApellido=frmFormulario.txtNApellido.value.trim();
@@ -34,7 +33,7 @@ function crearCuenta(){
             frmFormulario.txtNApellido.focus();
             bValido=false;
         }
-        sErrores+="-El apellido debe ser alfabético entre 5 y 15 caracteres.";
+        sErrores+="\n-El apellido debe ser alfabético entre 5 y 15 caracteres.";
     }
     //validar email
     var sEmail=frmFormulario.txtNEmail.value.trim();
@@ -62,15 +61,38 @@ function crearCuenta(){
         //mostrar errores
         alert(sErrores);
     }else{
-        var oUsuario=new Usuario(sUsuario,sNombre,sApellido,sEmail,sContraseña,new Date(),"user");
-        if(oUpoflix.altaUsuario(oUsuario)){
-            alert("Cuenta creada. Iniciando sesión...");
-            oUpoflix.oUsuarioActivo=oUsuario;
-            inicio();
+        var sParametros = "user=" + sUsuario;
+        sParametros += "&nombre=" + sNombre;
+        sParametros += "&apellidos=" + sApellido;
+        sParametros += "&email=" + sEmail;
+        sParametros += "&password=" + sContraseña;
+        sParametros = encodeURI(sParametros);
+		$.ajax({
+	        url: "./php/validacionUsuario.php",
+	        type: "GET",
+	        async: false,
+	        data: sParametros,
+	        dataType: "text",
+	        success: procesoRespuestaValidarUsuario
+        });
+    
+        if(!UsuarioExiste){
+            $.post("./php/addUsuario.php", sParametros, respuestañadirUsuario, 'json');
         }else{
-            frmFormulario.txtNUser.classList.add("bg-warning");
-            alert("El nombre de usuario ya existe. Inicia sesión o escoge un nombre nuevo.");
+            crearDialog("El usuario ya existe");
         }
+    }
+}
+function respuestañadirUsuario(oDatos, sStatus, oXHR) {
+    if (oDatos.error == 0)
+        cargarIniciarSesion();
+	crearDialog(oDatos.mensaje);
+}
+function procesoRespuestaValidarUsuario(sRespuesta) {
+    if (sRespuesta == "EXISTE") {
+        UsuarioExiste = true;
+    } else {
+        UsuarioExiste = false;
     }
 }
 

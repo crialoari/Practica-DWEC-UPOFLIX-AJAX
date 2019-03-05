@@ -1,5 +1,4 @@
-//document.querySelector("#capaIniciarSesion input[type=button]").addEventListener("click", iniciarSesion);
-document.querySelector("#capaIniciarSesion input[type=button]").addEventListener("click", function(){alert("iniciar sesion");});
+document.querySelector("#capaIniciarSesion input[type=button]").addEventListener("click", iniciarSesion);
 
 function iniciarSesion(){
     var frmFormulario=document.querySelector("#frmIniciarSesion");
@@ -30,24 +29,19 @@ function iniciarSesion(){
         //mostrar errores
         alert(sErrores);
     }else{
-        var iResultado=oUpoflix.iniciarSesion(sUsuario,sContraseña);
-        switch (iResultado) {
-            case 0:
-                frmFormulario.txtUser.classList.add("bg-warning");
-                alert("El usuario no existe");
-                break;
-            case 1:
-                frmFormulario.txtPass.classList.add("bg-warning");
-                alert("Contraseña incorrecta");
-                break;
-            case 2:
-                inicio();
-                break;
-            default:
-                alert("Error desconocido");
-                break;
-        }
+        sParametros="user="+sUsuario+"&password="+sContraseña;
+        sParametros=encodeURI(sParametros);
+        $.get("./php/getUsuario.php",sParametros,respuestaGetUsuario,'json');
     }
+}
+
+function respuestaGetUsuario(oDatos){
+    if(oDatos.error==0){
+        oUsuarioActivo={user:oDatos.usuario};
+        oUsuarioActivo.sRol=oDatos.rol;
+        inicio();
+    }
+    crearDialog(oDatos.mensaje);
 }
 
 function limpiarErroresInicioSesion(){

@@ -15,6 +15,7 @@ function instanciarXHR() {
     }
     return xhttp;
 }
+
 //ELIMINAR CAPA ACTOR/DIRECTOR CON BOTON
 function eliminarCapa(oEvento){
     var oE=oEvento || window.event;
@@ -31,7 +32,7 @@ function eliminarCapa(oEvento){
 function crearPuntuacion(nota){
     var oCapaPuntuacion=document.createElement("div");
     var oPuntuacion=document.createElement("p");
-    oPuntuacion.textContent=(nota=="0" ? "Sin puntuación" : nota);
+    oPuntuacion.textContent=(nota=="0" ? "Sin puntuación" : parseFloat(nota).toFixed(2));
     var oStar=document.createElement("span");
     oStar.classList.add("puntuacion");
     oCapaPuntuacion.appendChild(oStar);
@@ -64,7 +65,53 @@ function procesoRespuestaEliminarPeli(oDatos) {
     alert(oDatos.mensaje);
 }
 
-//MOSTRAT CAPA DATOS PRODUCCION
+//ELIMINAR-AGREGAR FAVS
+function eliminarPeliFavLista(oEvento){
+    var oE = oEvento || window.event;
+    var sTitulo=oE.target.parentElement.dataset.produccion.replace("_-_",":");
+    sTitulo=sTitulo.replace(/-/g, " ");
+    sTitulo=sTitulo.replace("__","¿");
+    sTitulo=sTitulo.replace("_","?");
+
+    var oAjax=instanciarXHR();
+    var sURL="./php/deletePuntuacion.php";
+    var sParametros="titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
+    oAjax.addEventListener("readystatechange", respuestaFavLista);
+    oAjax.open("POST", encodeURI(sURL), true);
+    oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    oAjax.send(encodeURI(sParametros));
+    
+}
+
+function agregarPeliFavLista(oEvento){
+    var oE = oEvento || window.event;
+    var sTitulo=oE.target.parentElement.dataset.produccion.replace("_-_",":");
+    sTitulo=sTitulo.replace(/-/g, " ");
+    sTitulo=sTitulo.replace("__","¿");
+    sTitulo=sTitulo.replace("_","?");
+
+    var oAjax=instanciarXHR();
+    var sURL="./php/addPuntuacion.php";
+    var sParametros="nota=0&titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
+    oAjax.addEventListener("readystatechange", respuestaFavLista);
+    oAjax.open("POST", encodeURI(sURL), true);
+    oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    oAjax.send(encodeURI(sParametros));
+}
+
+function respuestaFavLista(){
+    var oAjax=this;
+    if(oAjax.readyState==4 && oAjax.status==200){
+        //console.log(oAjax.responseText);
+        var oRespuesta=JSON.parse(oAjax.responseText);
+        if(oRespuesta.error==0){
+            listarPelis();
+        }
+        crearDialog(oRespuesta.mensaje);
+    }
+}
+
+//MOSTRAR CAPA DATOS PRODUCCION
 function mostrarMasDatos(oEvento){
     var oE = oEvento || window.event;
     var sProduccion=oE.target.parentElement.dataset.produccion;

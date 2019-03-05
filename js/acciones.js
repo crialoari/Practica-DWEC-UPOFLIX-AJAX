@@ -2,9 +2,7 @@ function cargarDatosUsuario(){
     $(".row").hide();
     $("#contenido").empty();
     $("#contenido").show();
-    //ENVIAR USUARIO ACTIVO
-    //GET DATOS USUARIO
-    //FORMAR HTML
+    mostrarDatosUsuario();
 }
 
 function cargarPelisFavoritas(){
@@ -14,14 +12,22 @@ function cargarPelisFavoritas(){
     pedirListadoFavs();
 }
 
-function cerrarSesion(oEvento){
-    var oE = oEvento || window.event;
-    oE.preventDefault();
-    var bSalir = confirm("¿Quiere cerrar sesión?");
-    if (bSalir){
-        oUsuarioActivo=null;
-        inicio();
-    }
+function cerrarSesion(){
+    var capaDialog="<div title='Alerta'><p>¿Quiere cerrar sesión?</p></div>";
+    $(capaDialog).dialog({
+      resizable:false,
+      modal: true,
+      buttons: {
+        Aceptar: function() {
+            oUsuarioActivo=null;
+            inicio();
+            $( this ).dialog("close");
+        },
+        Cancelar: function() {
+          $( this ).dialog("close");
+        }
+      }
+    });
 }
 
 function cargarCrearCuenta(){
@@ -29,6 +35,8 @@ function cargarCrearCuenta(){
     $('#capaCrearCuenta').show();
     if($('#capaCrearCuenta div').size() == 0) 
         $("#capaCrearCuenta").load("formularios/crearCuenta.html", function(){$.getScript("js/crearCuenta.js");});
+    else
+        frmCrearCuenta.reset();
 }
 
 function cargarIniciarSesion(){
@@ -36,6 +44,8 @@ function cargarIniciarSesion(){
     $('#capaIniciarSesion').show();
     if($('#capaIniciarSesion div').size() == 0) 
         $("#capaIniciarSesion").load("formularios/iniciarSesion.html", function(){$.getScript("js/iniciarSesion.js");});
+    else
+        frmIniciarSesion.reset();
 }
 
 function listarPelis(){

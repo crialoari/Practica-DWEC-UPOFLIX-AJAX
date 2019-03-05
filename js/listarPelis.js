@@ -125,7 +125,7 @@ function crearAcciones(titulo){
     oBoton.type="button";
     oBoton.classList.add("btn");
     oBoton.classList.add("btn-sm");
-    oBoton.classList.add("btn-success");
+    oBoton.classList.add("btn-warning");
     oBoton.classList.add("mr-1");
     oBoton.value="+";
     oBoton.addEventListener("click", mostrarMasDatos);
@@ -137,16 +137,28 @@ function crearAcciones(titulo){
         oBoton.classList.add("btn");
         oBoton.classList.add("btn-sm");
         //COMPROBAR SI ESTÁ ENTRE LAS PELICULAS FAVORITAS
-        var aFavs=aPeliculasFavoritas;
-        if(aFavs.length>0){
-            oBoton.classList.add("btn-danger");
-            oBoton.addEventListener("click", eliminarPeliFavNavegacion);
+        var sParametros="titulo="+titulo+"&usuario="+oUsuarioActivo.user;
+        var bFavorito;
+        $.ajax({
+            url: "./php/comprobarFavorito.php",
+            data: sParametros,
+            type: 'GET',
+            async: false,
+            success: function(oDatos){
+                bFavorito=oDatos.bFavorito;
+            },
+            dataType: 'json'
+        });
+        if(bFavorito){
+            oBoton.classList.add("btn-success");
+            oBoton.addEventListener("click", eliminarPeliFavLista);
         }else{
-            oBoton.classList.add("btn-outline-danger");
-            oBoton.addEventListener("click", agregarPeliFavNavegacion);
-        }
+            oBoton.classList.add("btn-outline-success");
+            oBoton.addEventListener("click", agregarPeliFavLista);
+        }        
         oBoton.classList.add("mr-1");
-        oBoton.value="❤";
+
+        oBoton.value="✔";
         oFormulario.appendChild(oBoton);
         if(oUsuarioActivo.sRol=="admin"){
             oBoton=document.createElement("INPUT");
@@ -170,18 +182,4 @@ function crearAcciones(titulo){
         }
     }
     return oFormulario;
-}
-
-function eliminarPeliFavNavegacion(oEvento){
-    var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion;
-    //ELIMINAR DE FAVORITO
-    crearDialog("falta eliminar favorito");
-}
-
-function agregarPeliFavNavegacion(oEvento){
-    var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion;
-    //AGREGAR A FAVORITO
-    crearDialog("falta agregar favorito");
 }

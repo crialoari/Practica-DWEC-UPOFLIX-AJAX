@@ -31,7 +31,7 @@ if(sizeof($respuesta)==0){
 	$resultado = mysqli_query($conexion,$sql);
 	if(mysqli_affected_rows($conexion)<0){
 		$respuesta["error"] = 3;
-    	$respuesta["mensaje"] = "Error en al modificar: ".mysqli_error($conexion);
+    	$respuesta["mensaje"] = "Error al modificar: ".mysqli_error($conexion);
 	}
 	//actualizar puntuacion
 	if($formulario["txtTituloAntiguo"]!=$formulario["txtModTitulo"] && sizeof($respuesta)==0){
@@ -39,14 +39,14 @@ if(sizeof($respuesta)==0){
 		$resultado = mysqli_query($conexion,$sql);
 			if(mysqli_affected_rows($conexion)<0){
 				$respuesta["error"] = 3;
-		    	$respuesta["mensaje"] = "Error en al modificar: ".mysqli_error($conexion);
+		    	$respuesta["mensaje"] = "Error al modificar: ".mysqli_error($conexion);
 			}
 	}
 }
 
 if(sizeof($respuesta)==0){
 	$respuesta["error"] = 0;
-    $respuesta["mensaje"] = "Producción modificada"; 
+    $respuesta["mensaje"] = "Datos de producción modificados."; 
     //añadir personas actores
     if(isset($formulario["txtNombreNA"]))
 	    for($i=0;$i<sizeof($formulario["txtNombreNA"]);$i++){

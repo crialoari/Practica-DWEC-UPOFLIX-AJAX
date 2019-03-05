@@ -42,7 +42,7 @@ if(mysqli_affected_rows($conexion)<0){
 
 if(sizeof($respuesta)==0){
 	$respuesta["error"] = 0;
-    $respuesta["mensaje"] = "Producción eliminada";
+    $respuesta["mensaje"] = "Producción eliminada.";
 }
 
 echo json_encode($respuesta);

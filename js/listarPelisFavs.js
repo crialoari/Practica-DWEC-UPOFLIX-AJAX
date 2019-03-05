@@ -159,7 +159,7 @@ function crearAccionesFav(titulo){
     oBoton.type="button";
     oBoton.classList.add("btn");
     oBoton.classList.add("btn-sm");
-    oBoton.classList.add("btn-success");
+    oBoton.classList.add("btn-warning");
     oBoton.classList.add("mr-1");
     oBoton.value="+";
     oBoton.addEventListener("click", mostrarMasDatos);
@@ -169,9 +169,9 @@ function crearAccionesFav(titulo){
     oBoton.type="button";
     oBoton.classList.add("btn");
     oBoton.classList.add("btn-sm");
-    oBoton.classList.add("btn-danger");
+    oBoton.classList.add("btn-success");
     oBoton.classList.add("mr-1");
-    oBoton.value="❤";
+    oBoton.value="✔";
     oBoton.addEventListener("click", eliminarPeliFavUsuario);
     oFormulario.appendChild(oBoton);
     return oFormulario;
@@ -179,21 +179,50 @@ function crearAccionesFav(titulo){
 
 function eliminarPeliFavUsuario(oEvento){
     var oE = oEvento || window.event;
-    var sTitulo=oE.target.parentElement.dataset.produccion;
-    //ELIMINAR DE FAVORITO
-    crearDialog("falta eliminar favorito usuario");
+    var sTitulo=oE.target.parentElement.dataset.produccion.replace("_-_",":");
+    sTitulo=sTitulo.replace(/-/g, " ");
+    sTitulo=sTitulo.replace("__","¿");
+    sTitulo=sTitulo.replace("_","?");
+
+    var oAjax=instanciarXHR();
+    var sURL="./php/deletePuntuacion.php";
+    var sParametros="titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
+    oAjax.addEventListener("readystatechange", respuestaFavUsuario);
+    oAjax.open("POST", encodeURI(sURL), true);
+	oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	oAjax.send(encodeURI(sParametros));
+
 }
 
 function puntuarProduccion(oEvento){
 	var oE = oEvento || window.event;
-	/*var sTitulo=oE.target.parentElement.dataset.produccion.replace(/-/g, " ");
+	var sTitulo=oE.target.parentElement.dataset.produccion.replace("_-_",":");
+    sTitulo=sTitulo.replace(/-/g, " ");
+    sTitulo=sTitulo.replace("__","¿");
+    sTitulo=sTitulo.replace("_","?");
     var iNota=parseInt(oE.target.dataset.value,10);
     var ancho=iNota*20;
     var oCapaTapar=oE.target.parentElement.lastElementChild;
     oCapaTapar.style.width=ancho+"px";
-    if(oUpoflix.puntuar(iNota,sTitulo))
-	   crearDialog("Puntuación añadida.");
-    else
-        crearDialog("Puntuación cambiada.");*/
-    crearDialog("falta puntuar");
+
+    var oAjax=instanciarXHR();
+    var sURL="./php/addPuntuacion.php";
+    var sParametros="nota="+iNota+"&titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
+    oAjax.addEventListener("readystatechange", respuestaFavUsuario);
+    oAjax.open("POST", encodeURI(sURL), true);
+	oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	oAjax.send(encodeURI(sParametros));
+
+    
+}
+function respuestaFavUsuario(){
+	var oAjax = this;
+	if (oAjax.readyState == 4 && oAjax.status == 200) {
+		//console.log(oAjax.responseText);
+		var oRespuesta = JSON.parse(oAjax.responseText);
+    	if (oRespuesta.error == 0){
+            cargarPelisFavoritas();
+        }
+	    crearDialog(oRespuesta.mensaje);
+    }
 }

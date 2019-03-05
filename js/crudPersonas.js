@@ -281,8 +281,9 @@ function añadirPersonaDesdeElenco(oEvento){
 	    });
 
 	    if(!PersonaExiste)
-		$.post("./php/addPersona.php", sParametros, respuestañadirPersona, 'json');
-
+			$.post("./php/addPersona.php", sParametros, respuestañadirPersona, 'json');
+		else
+			crearDialog("Ya existe una persona con esos datos");
 	}else{
 		crearDialog("Debe rellenar todos los campos.");
 	}

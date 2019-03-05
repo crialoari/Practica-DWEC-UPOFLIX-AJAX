@@ -15,12 +15,12 @@ $sql="INSERT INTO `producciones`(`cartel`, `titulo`, `genero`, `resumen`, `estre
 $resultado = mysqli_query($conexion,$sql);
 if(mysqli_affected_rows($conexion)<0){
 	$respuesta["error"] = 1;
-    $respuesta["mensaje"] = "Error en al insertar: ".mysqli_error($conexion);
+    $respuesta["mensaje"] = "Error al insertar: ".mysqli_error($conexion);
 }
 
 if(sizeof($respuesta)==0){
 	$respuesta["error"] = 0;
-    $respuesta["mensaje"] = "Producción añadida"; 
+    $respuesta["mensaje"] = "Producción añadida."; 
 
     //añadir personas actores
     if(isset($formulario["txtNombreNA"]))

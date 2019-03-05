@@ -1,8 +1,4 @@
-//oUsuarioActivo=null;
-oUsuarioActivo={user: "carlos"};
-oUsuarioActivo.sRol="admin";
-aPeliculasFavoritas=[];
-
+oUsuarioActivo=null;
 inicio();
 
 function inicio(){
