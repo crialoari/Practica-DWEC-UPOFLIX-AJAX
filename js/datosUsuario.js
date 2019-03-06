@@ -118,7 +118,6 @@ function mostrarDatosUsuario(){
     oBoton.value="Borrar cuenta";
     oBoton.addEventListener("click", borrarCuentaUsuario);
     oCelda.appendChild(oBoton);
-    
     oFormulario.appendChild(oTabla);
     oColumnaDatos.appendChild(oFormulario);
     oCapaContenido.appendChild(oColumnaDatos);
@@ -149,7 +148,6 @@ function modificarDatosUsuario(){
     oLabel.textContent="Administrador";
     oCelda.appendChild(oCheckbox);
     oCelda.appendChild(oLabel);
-
     //botones acciones
     var oFila = document.querySelector("#contenido table tbody").insertRow(-1);
     oCelda = oFila.insertCell(-1);
@@ -223,7 +221,6 @@ function validarDatosUsuario(){
         }
         sErrores+="\n-La contraseña debe contener al menos una mayúscula, un numero y entre 6 y 15 caracteres..";
     }
-
     var sRol=(frmFormulario.chkbxAdmin.checked ? "admin" : "user");
     if(!bValido){
         //mostrar errores
@@ -238,6 +235,7 @@ function validarDatosUsuario(){
         $.post("./php/editarUsuario.php",sParamentros,respuestaEditarUsuario,'json');
     }
 }
+
 function respuestaEditarUsuario(oDatos){
     if(oDatos.error==0){
         cargarDatosUsuario();

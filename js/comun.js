@@ -47,16 +47,15 @@ function eliminarPeli(oEvento){
     sTitulo=sTitulo.replace(/-/g, " ");
     sTitulo=sTitulo.replace("__","¿");
     sTitulo=sTitulo.replace("_","?");
-    
-        $.ajax({
-            url: "./php/deleteProduccion.php",
-            dataType: 'json',
-            cache: false,
-            async: true, 
-            data: "titulo="+sTitulo,
-            method: "POST",
-            success: procesoRespuestaEliminarPeli
-        });
+    $.ajax({
+        url: "./php/deleteProduccion.php",
+        dataType: 'json',
+        cache: false,
+        async: true, 
+        data: "titulo="+sTitulo,
+        method: "POST",
+        success: procesoRespuestaEliminarPeli
+    });
 }
 
 function procesoRespuestaEliminarPeli(oDatos) {
@@ -72,7 +71,6 @@ function eliminarPeliFavLista(oEvento){
     sTitulo=sTitulo.replace(/-/g, " ");
     sTitulo=sTitulo.replace("__","¿");
     sTitulo=sTitulo.replace("_","?");
-
     var oAjax=instanciarXHR();
     var sURL="./php/deletePuntuacion.php";
     var sParametros="titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
@@ -80,7 +78,6 @@ function eliminarPeliFavLista(oEvento){
     oAjax.open("POST", encodeURI(sURL), true);
     oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     oAjax.send(encodeURI(sParametros));
-    
 }
 
 function agregarPeliFavLista(oEvento){
@@ -89,7 +86,6 @@ function agregarPeliFavLista(oEvento){
     sTitulo=sTitulo.replace(/-/g, " ");
     sTitulo=sTitulo.replace("__","¿");
     sTitulo=sTitulo.replace("_","?");
-
     var oAjax=instanciarXHR();
     var sURL="./php/addPuntuacion.php";
     var sParametros="nota=0&titulo="+sTitulo+"&usuario="+oUsuarioActivo.user;
@@ -330,7 +326,6 @@ function capaDirectorNuevo(){
     oBoton.addEventListener("click",eliminarCapa);//evento boton
     oCapaColumna.appendChild(oBoton);
     oCapaFormulario.appendChild(oCapaColumna);
-
     //introducir todo
     oCapa.appendChild(oCapaFormulario);
     return oCapa

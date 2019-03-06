@@ -1,19 +1,14 @@
 <?php
-
-//Recoger parametros
-$titulo = $_GET["titulo"];
-
-// Configuración BASE DE DATOS MYSQL
 $servidor  = "localhost";
 $basedatos = "upoflix";
 $usuario   = "root";
 $password  = "";
 
-// Creamos la conexión al servidor.
+$titulo = $_GET["titulo"];
+
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
 mysqli_set_charset($conexion,"utf8");
 
-// Consulta SQL para obtener los datos de los centros.
 $sql = "SELECT COUNT(*)FROM `producciones` WHERE titulo='".$titulo."'";
 $resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 

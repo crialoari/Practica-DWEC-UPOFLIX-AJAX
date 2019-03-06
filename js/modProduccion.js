@@ -44,7 +44,6 @@ function limpiarErroresModificar(){
 function cargarDatosProduccion(){
 	var sTituloAntiguo=document.querySelector("#frmModificarProduccion #txtTituloAntiguo").value;
 	sTituloAntiguo = encodeURI(sTituloAntiguo);
-	
 	$.ajax({
         url: "./php/getProduccion.php",
         dataType: 'xml',
@@ -84,7 +83,6 @@ function procesarRespuestaDatosProduccion(oXML){
 		oInputNombre.value=actoresMod[i].querySelector("nombre").textContent;
 		oInputApellido.value=actoresMod[i].querySelector("apellidos").textContent
     }
-    
     //directores
     var directoresMod=aPeli.querySelectorAll("director");
     for(var i=0;i<directoresMod.length;i++){
@@ -219,7 +217,6 @@ function validarModificar(){
 			sErrores+="\n-Revisa los datos de nuevos directores.";
 		}
     }
-
 	//comprobar que no exite la produccion
 	$.ajax({
 	    url: "./php/validacionUpdateProduccion.php",

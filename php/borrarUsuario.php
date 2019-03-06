@@ -6,7 +6,6 @@ $password  = "";
 
 $user=$_POST["user"];
 
-// Creamos la conexión al servidor.
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
 mysqli_set_charset($conexion,"utf8");
 

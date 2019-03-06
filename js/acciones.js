@@ -73,11 +73,14 @@ function cargarAñadirProduccion(){
         $("#capaAddProduccion").load("formularios/addProduccion.html", function(){$.getScript("js/addProduccion.js");});
     else{
         frmAddProduccion.reset();
+        limpiarErroresAñadir();
         $(".elegir-actor").remove();
         $(".elegir-director").remove();
         $(".nuevo-actor").remove();
         $(".nuevo-director").remove();
         $("#datosEstrenoDuracion").show();
+        rellenarDesplegableGenero();
+        rellenarDesplegablePersonas();
     }
 }
 

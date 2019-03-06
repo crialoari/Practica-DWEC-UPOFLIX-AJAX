@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-03-2019 a las 00:47:40
+-- Tiempo de generación: 06-03-2019 a las 23:02:02
 -- Versión del servidor: 10.1.35-MariaDB
 -- Versión de PHP: 7.2.9
 
@@ -35,6 +35,18 @@ CREATE TABLE `actores` (
   `persona` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `actores`
+--
+
+INSERT INTO `actores` (`produccion`, `persona`) VALUES
+('Indiana Jones y el templo maldito', 2),
+('Indiana Jones y el templo maldito', 3),
+('La cena de los idiotas', 27),
+('La cena de los idiotas', 31),
+('Pulp Fiction', 28),
+('Pulp Fiction', 29);
+
 -- --------------------------------------------------------
 
 --
@@ -51,7 +63,9 @@ CREATE TABLE `directores` (
 --
 
 INSERT INTO `directores` (`produccion`, `persona`) VALUES
-('En busca del arca perdida', 1);
+('En busca del arca perdida', 1),
+('Indiana Jones y el templo maldito', 1),
+('Pulp Fiction', 30);
 
 -- --------------------------------------------------------
 
@@ -103,9 +117,11 @@ INSERT INTO `personas` (`id`, `nombre`, `apellidos`) VALUES
 (10, 'Tim', 'Burton'),
 (16, 'Hayao', 'Miyazaki'),
 (24, 'James', 'Cameron'),
-(25, 'Ben', 'Lemon'),
-(26, 'Benito', 'Limon'),
-(27, 'Steve', 'Carell');
+(27, 'Steve', 'Carell'),
+(28, 'Uma', 'Thurman'),
+(29, 'John', 'Travolta'),
+(30, 'Quentin', 'Tarantino'),
+(31, 'Paul', 'Rudd');
 
 -- --------------------------------------------------------
 
@@ -127,7 +143,10 @@ CREATE TABLE `producciones` (
 --
 
 INSERT INTO `producciones` (`cartel`, `titulo`, `genero`, `resumen`, `estreno`, `duracion`) VALUES
-('https://www.ecartelera.com/carteles/2100/2198/001_p.jpg', 'En busca del arca perdida', 'Aventuras', 'El arqueólogo, Indiana Jones, compite contra los nazis en la búsqueda de una famosa reliquia religiosa.', '1981-10-14', 115);
+('https://www.ecartelera.com/carteles/2100/2198/001_p.jpg', 'En busca del arca perdida', 'Aventuras', 'El arqueólogo, Indiana Jones, compite contra los nazis en la búsqueda de una famosa reliquia religiosa.', '1981-10-14', 115),
+('https://www.ecartelera.com/carteles/2100/2196/001_p.jpg', 'Indiana Jones y el templo maldito', 'Aventuras', 'Indiana busca piedras sagradas en una secta de la India.', '1984-03-14', 118),
+('', 'La cena de los idiotas', 'Comedia', 'Un jefe que organiza un evento mensual y el que lleve al mejor bufón es apoyado en su carrera. Tim cambia de idea cuando conoce a Barry, un hombre que construye maquetas con ratones de peluche.', '2010-07-10', 115),
+('', 'Pulp Fiction', 'Drama', 'La vida de un boxeador, dos sicarios, la esposa de un gánster y dos bandidos se entrelaza en una historia de violencia y redención.', '1994-07-22', 154);
 
 -- --------------------------------------------------------
 
@@ -147,8 +166,9 @@ CREATE TABLE `puntuaciones` (
 
 INSERT INTO `puntuaciones` (`nota`, `usuario`, `produccion`) VALUES
 (5, 'aledaw', 'En busca del arca perdida'),
-(0, 'carlos', 'En busca del arca perdida'),
-(3, 'crisdaw', 'En busca del arca perdida');
+(5, 'carlos', 'En busca del arca perdida'),
+(4, 'crisdaw', 'La cena de los idiotas'),
+(5, 'crisdaw', 'Pulp Fiction');
 
 -- --------------------------------------------------------
 
@@ -228,7 +248,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

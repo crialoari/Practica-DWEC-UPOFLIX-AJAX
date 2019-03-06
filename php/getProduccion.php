@@ -1,14 +1,13 @@
 <?php
 require_once('getPuntuaciones.php');
-// Configuración BASE DE DATOS MYSQL
+
 $servidor  = "localhost";
 $basedatos = "upoflix";
 $usuario   = "root";
 $password  = "";
-//PARAMETROS
+
 $titulo = $_GET["titulo"];
 
-// Creamos la conexión al servidor
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
 mysqli_set_charset($conexion,"utf8");
 
@@ -54,9 +53,7 @@ while ($fila = mysqli_fetch_array($resultados)) {
 //$XML .='<sql>'.$sql.'</sql>';
 $XML .='</datos>';
 
-// Cabecera de respuesta indicando que el contenido de la respuesta es XML
 header("Content-Type: text/xml");
-// Para que el navegador no haga cache de los datos devueltos por la página PHP.
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 

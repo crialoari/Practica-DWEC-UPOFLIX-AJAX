@@ -191,7 +191,6 @@ function eliminarPeliFavUsuario(oEvento){
     oAjax.open("POST", encodeURI(sURL), true);
 	oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	oAjax.send(encodeURI(sParametros));
-
 }
 
 function puntuarProduccion(oEvento){
@@ -212,9 +211,8 @@ function puntuarProduccion(oEvento){
     oAjax.open("POST", encodeURI(sURL), true);
 	oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	oAjax.send(encodeURI(sParametros));
-
-    
 }
+
 function respuestaFavUsuario(){
 	var oAjax = this;
 	if (oAjax.readyState == 4 && oAjax.status == 200) {

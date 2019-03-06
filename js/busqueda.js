@@ -109,7 +109,7 @@ function crearAccionesBusqueda(titulo){
 	    oBoton.type="button";
 	    oBoton.classList.add("btn");
 	    oBoton.classList.add("btn-sm");
-	            //COMPROBAR SI ESTÁ ENTRE LAS PELICULAS FAVORITAS
+	    //COMPROBAR SI ESTÁ ENTRE LAS PELICULAS FAVORITAS
         var sParametros="titulo="+titulo+"&usuario="+oUsuarioActivo.user;
         var bFavorito;
         $.ajax({

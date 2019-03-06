@@ -83,11 +83,13 @@ function crearCuenta(){
         }
     }
 }
+
 function respuestañadirUsuario(oDatos, sStatus, oXHR) {
     if (oDatos.error == 0)
         cargarIniciarSesion();
 	crearDialog(oDatos.mensaje);
 }
+
 function procesoRespuestaValidarUsuario(sRespuesta) {
     if (sRespuesta == "EXISTE") {
         UsuarioExiste = true;
